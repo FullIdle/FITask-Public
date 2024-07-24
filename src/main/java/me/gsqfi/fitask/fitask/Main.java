@@ -4,6 +4,7 @@ import me.gsqfi.fitask.fitask.api.FITaskApi;
 import me.gsqfi.fitask.fitask.commands.MainCmd;
 import me.gsqfi.fitask.fitask.helpers.DataPersistenceHelper;
 import me.gsqfi.fitask.fitask.helpers.TaskDataHelper;
+import me.gsqfi.fitask.fitask.taskComponent.BasicTask;
 import me.gsqfi.fitask.fitask.taskComponent.conditions.ItemStackCondition;
 import me.gsqfi.fitask.fitask.taskComponent.rewards.ItemStackReward;
 import org.bukkit.Bukkit;
@@ -24,6 +25,8 @@ public class Main extends JavaPlugin {
         FITaskApi.registerConditions(this,new ItemStackCondition());
         /*reward*/
         FITaskApi.registerRewards(this,new ItemStackReward());
+        /*basicTask type register*/
+        FITaskApi.registerTasks(this,new BasicTask());
         /*=======*/
         getLogger().info("\n" +
                 "§3    ___       ___       §f___       ___       ___       ___   \n" +

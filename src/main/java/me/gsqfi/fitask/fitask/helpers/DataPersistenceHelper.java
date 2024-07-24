@@ -3,6 +3,7 @@ package me.gsqfi.fitask.fitask.helpers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import me.gsqfi.fitask.fitask.IAdapter;
+import me.gsqfi.fitask.fitask.taskComponent.BasicTask;
 import me.gsqfi.fitask.fitask.taskComponent.conditions.ICondition;
 import me.gsqfi.fitask.fitask.taskComponent.rewards.IReward;
 import org.bukkit.event.EventHandler;
@@ -26,6 +27,9 @@ public class DataPersistenceHelper implements Listener {
         gson = builder.create();
     }
 
+    public static void registerTasks(Plugin plugin, BasicTask... basicTasks){
+        registerAdapters(plugin,basicTasks);
+    }
     public static void registerConditions(Plugin plugin,ICondition<?>... conditions){
         registerAdapters(plugin,conditions);
     }

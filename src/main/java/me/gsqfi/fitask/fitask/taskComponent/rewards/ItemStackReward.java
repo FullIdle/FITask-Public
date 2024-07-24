@@ -15,17 +15,10 @@ import java.lang.reflect.Type;
 @Getter
 @Setter
 public class ItemStackReward implements IReward<ItemStackReward> {
-    public static ItemStackReward deserialize(String json) {
-        return new ItemStackReward(json);
-    }
-
     private Material material;
     private int amount;
 
     public ItemStackReward(){}
-    private ItemStackReward(String json){
-        this(DataPersistenceHelper.gson.fromJson(json, JsonObject.class));
-    }
     private ItemStackReward(JsonObject object){
         this.material = Material.getMaterial(object.get("material").getAsString());
         this.amount = object.get("amount").getAsInt();

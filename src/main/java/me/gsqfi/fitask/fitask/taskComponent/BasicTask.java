@@ -1,40 +1,33 @@
 package me.gsqfi.fitask.fitask.taskComponent;
 
-import com.google.common.io.Files;
 import com.google.gson.*;
-import com.google.gson.stream.JsonWriter;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import me.gsqfi.fitask.fitask.IAdapter;
 import me.gsqfi.fitask.fitask.helpers.DataPersistenceHelper;
+import me.gsqfi.fitask.fitask.helpers.TaskDataHelper;
 import me.gsqfi.fitask.fitask.taskComponent.conditions.ICondition;
 import me.gsqfi.fitask.fitask.taskComponent.rewards.IReward;
 import org.bukkit.OfflinePlayer;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.UUID;
 
-@Setter
 @Getter
 public class BasicTask implements IAdapter<BasicTask> {
-    /*这是个必要方法*/
-    public static BasicTask deserialize(String json){
-        return new BasicTask(json);
-    }
-
+    @Setter
     private ICondition[] conditions;
+    @Setter
     private IReward[] rewards;
     private final UUID uuid;
+    private File file;
 
     public BasicTask() {
         uuid = UUID.randomUUID();
-    }
-
-    private BasicTask(String json) {
-        this(DataPersistenceHelper.gson.fromJson(json, JsonObject.class));
     }
 
     @SneakyThrows
@@ -93,7 +86,7 @@ public class BasicTask implements IAdapter<BasicTask> {
         for (ICondition condition : basicTask.conditions) {
             JsonObject con = new JsonObject();
             con.addProperty("type", condition.getClass().getName());
-            con.add("data", DataPersistenceHelper.gson.toJsonTree(con));
+            con.add("data", DataPersistenceHelper.gson.toJsonTree(condition));
             conditionArray.add(con);
         }
         object.add("conditions", conditionArray);
@@ -104,15 +97,24 @@ public class BasicTask implements IAdapter<BasicTask> {
             con.add("data", DataPersistenceHelper.gson.toJsonTree(reward));
             rewardArray.add(con);
         }
-        object.addProperty("uuid",uuid.toString());
+        object.add("rewards",rewardArray);
+        object.addProperty("uuid",basicTask.uuid.toString());
         return object;
     }
 
-    @SneakyThrows
-    public void save(File file){
+    public void saveSetFile(File file) {
+        this.file = file;
         JsonObject object = new JsonObject();
         object.addProperty("type",this.getClass().getName());
         object.add("data",DataPersistenceHelper.gson.toJsonTree(this));
-        DataPersistenceHelper.gson.toJson(object,JsonObject.class, new JsonWriter(new FileWriter(file)));
+        try (FileWriter writer = new FileWriter(this.file)){
+            writer.write(DataPersistenceHelper.gson.toJson(object));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static BasicTask getTask(UUID uuid){
+        return TaskDataHelper.getTask(uuid);
     }
 }
