@@ -3,12 +3,15 @@ package me.gsqfi.fitask.fitask;
 import me.gsqfi.fitask.fitask.api.FITaskApi;
 import me.gsqfi.fitask.fitask.commands.MainCmd;
 import me.gsqfi.fitask.fitask.helpers.DataPersistenceHelper;
+import me.gsqfi.fitask.fitask.helpers.TaskDataHelper;
 import me.gsqfi.fitask.fitask.taskComponent.conditions.ItemStackCondition;
 import me.gsqfi.fitask.fitask.taskComponent.rewards.ItemStackReward;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
+
     @Override
     public void onEnable() {
         reloadConfig();
@@ -37,5 +40,9 @@ public class Main extends JavaPlugin {
     public void reloadConfig() {
         super.saveDefaultConfig();
         super.reloadConfig();
+        Bukkit.getScheduler().runTask(this,()->{
+            DataPersistenceHelper.init();
+            TaskDataHelper.init();
+        });
     }
 }
