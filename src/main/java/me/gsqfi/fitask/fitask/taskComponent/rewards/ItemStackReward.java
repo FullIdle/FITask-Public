@@ -3,7 +3,6 @@ package me.gsqfi.fitask.fitask.taskComponent.rewards;
 import com.google.gson.*;
 import lombok.Getter;
 import lombok.Setter;
-import me.gsqfi.fitask.fitask.helpers.DataPersistenceHelper;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Item;

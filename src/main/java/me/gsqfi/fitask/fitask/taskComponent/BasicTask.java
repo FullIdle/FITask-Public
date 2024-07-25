@@ -25,6 +25,7 @@ public class BasicTask implements IAdapter<BasicTask> {
     private IReward[] rewards;
     private final UUID uuid;
     private File file;
+    private String taskName;
 
     public BasicTask() {
         uuid = UUID.randomUUID();
@@ -46,6 +47,9 @@ public class BasicTask implements IAdapter<BasicTask> {
             this.rewards[i] = DataPersistenceHelper.gson.fromJson(con.get("data"),
                     ((Class<? extends IReward>) Class.forName(con.get("type").getAsString())));
         }
+
+        this.taskName = object.get("taskName").getAsString();
+
         if (object.has("uuid")) {
             this.uuid = UUID.fromString(object.get("uuid").getAsString());
         }else{
