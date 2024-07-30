@@ -1,14 +1,13 @@
-package me.gsqfi.fitask.fitask.taskComponent;
+package me.gsqfi.fitask.fitask.api.taskComponent;
 
 import com.google.gson.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import me.gsqfi.fitask.fitask.IAdapter;
 import me.gsqfi.fitask.fitask.helpers.DataPersistenceHelper;
 import me.gsqfi.fitask.fitask.helpers.TaskDataHelper;
-import me.gsqfi.fitask.fitask.taskComponent.conditions.ICondition;
-import me.gsqfi.fitask.fitask.taskComponent.rewards.IReward;
+import me.gsqfi.fitask.fitask.api.taskComponent.conditions.ICondition;
+import me.gsqfi.fitask.fitask.api.taskComponent.rewards.IReward;
 import org.bukkit.OfflinePlayer;
 
 import java.io.File;
@@ -18,7 +17,7 @@ import java.lang.reflect.Type;
 import java.util.UUID;
 
 @Getter
-public class BasicTask implements IAdapter<BasicTask> {
+public class BasicTask implements IAdapter<BasicTask>,IDescription{
     @Setter
     private ICondition[] conditions;
     @Setter
@@ -26,6 +25,8 @@ public class BasicTask implements IAdapter<BasicTask> {
     private final UUID uuid;
     private File file;
     private String taskName;
+    @Setter
+    private String description;
 
     public BasicTask() {
         uuid = UUID.randomUUID();

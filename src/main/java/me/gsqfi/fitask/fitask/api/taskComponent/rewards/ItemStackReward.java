@@ -1,4 +1,4 @@
-package me.gsqfi.fitask.fitask.taskComponent.rewards;
+package me.gsqfi.fitask.fitask.api.taskComponent.rewards;
 
 import com.google.gson.*;
 import lombok.Getter;
@@ -16,11 +16,13 @@ import java.lang.reflect.Type;
 public class ItemStackReward implements IReward<ItemStackReward> {
     private Material material;
     private int amount;
+    private String description;
 
     public ItemStackReward(){}
     private ItemStackReward(JsonObject object){
         this.material = Material.getMaterial(object.get("material").getAsString());
         this.amount = object.get("amount").getAsInt();
+        this.description = object.get("description").getAsString();
     }
 
     @Override

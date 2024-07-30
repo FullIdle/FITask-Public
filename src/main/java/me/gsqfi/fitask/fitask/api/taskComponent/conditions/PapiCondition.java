@@ -1,4 +1,4 @@
-package me.gsqfi.fitask.fitask.taskComponent.conditions;
+package me.gsqfi.fitask.fitask.api.taskComponent.conditions;
 
 import com.google.gson.*;
 import lombok.Getter;
@@ -13,16 +13,23 @@ import java.lang.reflect.Type;
 public class PapiCondition implements ICondition<PapiCondition>{
     private String papi;
     private String contrastValue;
+    private String description;
 
     public PapiCondition(){}
     public PapiCondition(JsonObject object){
         this.papi = object.get("papi").getAsString();
         this.contrastValue = object.get("contrastValue").getAsString();
+        this.description = object.get("description").getAsString();
     }
 
     @Override
     public boolean meet(OfflinePlayer player) {
         return PlaceholderAPI.setPlaceholders(player, papi).equals(contrastValue);
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
     }
 
     @Override
@@ -35,6 +42,7 @@ public class PapiCondition implements ICondition<PapiCondition>{
         JsonObject object = new JsonObject();
         object.addProperty("papi",papiCondition.papi);
         object.addProperty("contrastValue",papiCondition.contrastValue);
+        object.addProperty("description",papiCondition.description);
         return object;
     }
 }

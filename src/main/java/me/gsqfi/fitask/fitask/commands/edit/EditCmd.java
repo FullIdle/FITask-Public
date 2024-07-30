@@ -1,17 +1,19 @@
-package me.gsqfi.fitask.fitask.commands;
+package me.gsqfi.fitask.fitask.commands.edit;
 
-import me.gsqfi.fitask.fitask.Main;
+import me.gsqfi.fitask.fitask.commands.ACmd;
+import me.gsqfi.fitask.fitask.commands.HelpCmd;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginCommand;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MainCmd extends ACmd{
-    public MainCmd() {
-        super(null,"fitask");
+public class EditCmd extends ACmd {
+    public EditCmd(ACmd superCmd) {
+        super(superCmd, "edit");
+        new EditHelpCmd(this);
+        new RemoveCmd(this);
     }
 
     @Override
@@ -25,11 +27,5 @@ public class MainCmd extends ACmd{
     @Override
     public List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         return nextTab(commandSender, command, s, strings);
-    }
-
-    public void register(Main plugin){
-        PluginCommand command = plugin.getCommand("fitask");
-        command.setExecutor(this);
-        command.setTabCompleter(this);
     }
 }

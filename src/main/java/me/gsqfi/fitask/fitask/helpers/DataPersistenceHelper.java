@@ -2,10 +2,10 @@ package me.gsqfi.fitask.fitask.helpers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import me.gsqfi.fitask.fitask.IAdapter;
-import me.gsqfi.fitask.fitask.taskComponent.BasicTask;
-import me.gsqfi.fitask.fitask.taskComponent.conditions.ICondition;
-import me.gsqfi.fitask.fitask.taskComponent.rewards.IReward;
+import me.gsqfi.fitask.fitask.api.taskComponent.IAdapter;
+import me.gsqfi.fitask.fitask.api.taskComponent.BasicTask;
+import me.gsqfi.fitask.fitask.api.taskComponent.conditions.ICondition;
+import me.gsqfi.fitask.fitask.api.taskComponent.rewards.IReward;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;

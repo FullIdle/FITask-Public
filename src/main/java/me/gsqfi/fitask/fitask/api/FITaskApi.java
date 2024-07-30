@@ -3,11 +3,13 @@ package me.gsqfi.fitask.fitask.api;
 import me.gsqfi.fitask.fitask.Main;
 import me.gsqfi.fitask.fitask.helpers.DataPersistenceHelper;
 import me.gsqfi.fitask.fitask.helpers.TaskDataHelper;
-import me.gsqfi.fitask.fitask.taskComponent.BasicTask;
-import me.gsqfi.fitask.fitask.taskComponent.conditions.ICondition;
-import me.gsqfi.fitask.fitask.taskComponent.rewards.IReward;
+import me.gsqfi.fitask.fitask.api.taskComponent.BasicTask;
+import me.gsqfi.fitask.fitask.api.taskComponent.conditions.ICondition;
+import me.gsqfi.fitask.fitask.api.taskComponent.rewards.IReward;
 import org.bukkit.plugin.Plugin;
 
+import java.util.Collection;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -31,7 +33,7 @@ public class FITaskApi {
         return TaskDataHelper.getTask(uuid);
     }
 
-    public static BasicTask[] getAllTask(){
-        return TaskDataHelper.getAllTask();
+    public static Collection<BasicTask> getAllTask(){
+        return TaskDataHelper.cacheTask.values();
     }
 }

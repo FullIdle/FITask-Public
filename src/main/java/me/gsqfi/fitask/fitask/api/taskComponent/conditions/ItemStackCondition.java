@@ -1,4 +1,4 @@
-package me.gsqfi.fitask.fitask.taskComponent.conditions;
+package me.gsqfi.fitask.fitask.api.taskComponent.conditions;
 
 import com.google.gson.*;
 import lombok.Getter;
@@ -15,11 +15,13 @@ import java.lang.reflect.Type;
 public class ItemStackCondition implements ICondition<ItemStackCondition>{
     private Material material;
     private int amount;
+    private String description;
 
     public ItemStackCondition(){}
     private ItemStackCondition(JsonObject object){
         this.material = Material.getMaterial(object.get("material").getAsString());
         this.amount = object.get("amount").getAsInt();
+        this.description = object.get("description").getAsString();
     }
 
     @Override
@@ -33,6 +35,13 @@ public class ItemStackCondition implements ICondition<ItemStackCondition>{
     }
 
     @Override
+    public String getDescription() {
+        return description
+                .replace("{amount}",String.valueOf(this.amount))
+                .replace("{material}",this.material.name());
+    }
+
+    @Override
     public ItemStackCondition deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         return new ItemStackCondition(jsonElement.getAsJsonObject());
     }
@@ -42,6 +51,7 @@ public class ItemStackCondition implements ICondition<ItemStackCondition>{
         JsonObject object = new JsonObject();
         object.addProperty("material",itemStackCondition.material.name());
         object.addProperty("amount",itemStackCondition.amount);
+        object.addProperty("description",itemStackCondition.description);
         return object;
     }
 }

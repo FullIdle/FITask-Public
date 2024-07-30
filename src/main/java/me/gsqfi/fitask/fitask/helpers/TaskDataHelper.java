@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import lombok.SneakyThrows;
 import me.gsqfi.fitask.fitask.Main;
 import me.gsqfi.fitask.fitask.api.FITaskApi;
-import me.gsqfi.fitask.fitask.taskComponent.BasicTask;
+import me.gsqfi.fitask.fitask.api.taskComponent.BasicTask;
 
 import java.io.File;
 import java.io.FileReader;
@@ -13,8 +13,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class TaskDataHelper {
-    private static final Map<UUID, BasicTask> cacheTask = new HashMap<>();
-    private static File dataFolder;
+    public static final Map<UUID, BasicTask> cacheTask = new HashMap<>();
+    public static File dataFolder;
 
     @SneakyThrows
     public static void init(){
@@ -50,10 +50,6 @@ public class TaskDataHelper {
         return cacheTask.get(uuid);
     }
 
-    public static BasicTask[] getAllTask(){
-        return cacheTask.values().toArray(new BasicTask[0]);
-    }
-
     /**
      * 将新建的任务加如缓存
      * 这个方法会调用一次saveSetFile
@@ -68,5 +64,9 @@ public class TaskDataHelper {
             return;
         }
         task.saveSetFile(task.getFile());
+    }
+
+    public static BasicTask removeTaskInCache(UUID uuid){
+        return cacheTask.remove(uuid);
     }
 }

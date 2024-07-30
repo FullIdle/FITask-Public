@@ -1,5 +1,6 @@
-package me.gsqfi.fitask.fitask.commands;
+package me.gsqfi.fitask.fitask.commands.edit;
 
+import me.gsqfi.fitask.fitask.commands.ACmd;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
@@ -8,17 +9,17 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;
 
-public class HelpCmd extends ACmd{
-    public static HelpCmd instance;
+public class EditHelpCmd extends ACmd {
+    public static EditHelpCmd instance;
 
-    public HelpCmd(ACmd cmd) {
+    public EditHelpCmd(ACmd cmd) {
         super(cmd,"help");
         instance = this;
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
-        sender.sendMessage("§aHELP!");
+        sender.sendMessage("§aEdit HELP!");
         return false;
     }
 
