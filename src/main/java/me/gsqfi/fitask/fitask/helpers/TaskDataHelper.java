@@ -58,7 +58,6 @@ public class TaskDataHelper {
      */
     public static void addTaskInCache(BasicTask task){
         cacheTask.put(task.getUuid(),task);
-        System.out.println(task.getUuid());
         if (task.getFile() == null) {
             task.saveSetFile(new File(dataFolder,task.getUuid()+".json"));
             return;

@@ -11,8 +11,8 @@ import java.io.File;
 import java.util.List;
 
 public class CreateCmd extends ACmd{
-    public CreateCmd(ACmd cmd) {
-        super(cmd,"create");
+    public CreateCmd(ACmd superCmd) {
+        super(superCmd,"create");
     }
 
     @Override

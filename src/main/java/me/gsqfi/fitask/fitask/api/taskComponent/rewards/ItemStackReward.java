@@ -48,6 +48,7 @@ public class ItemStackReward implements IReward<ItemStackReward> {
         JsonObject object = new JsonObject();
         object.addProperty("material",o.material.name());
         object.addProperty("amount",o.amount);
+        object.addProperty("description",o.description);
         return object;
     }
 }

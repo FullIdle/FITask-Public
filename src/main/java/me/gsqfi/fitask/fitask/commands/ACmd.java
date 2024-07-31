@@ -2,10 +2,10 @@ package me.gsqfi.fitask.fitask.commands;
 
 import com.google.common.collect.Lists;
 import lombok.Getter;
+import me.gsqfi.fitask.fitask.helpers.TaskDataHelper;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -20,15 +20,8 @@ public abstract class ACmd implements TabExecutor {
         this.superCmd = superCmd;
         this.name = name;
         if (this.superCmd != null) {
-            this.superCmd.subCmdMap.put(name,superCmd);
+            this.superCmd.subCmdMap.put(name,this);
         }
-    }
-
-    public List<String> getSubCmdNames(){
-        if (this.subCmdMap.isEmpty()) {
-            return Collections.emptyList();
-        }
-        return Lists.newArrayList(this.subCmdMap.keySet());
     }
 
     public String[] removeOneArg(String[] args){
@@ -47,14 +40,7 @@ public abstract class ACmd implements TabExecutor {
     }
 
     public ACmd nextExSub(String[] args){
-        //exSub
-        if (args.length > 0) {
-            String s1 = args[0].toLowerCase();
-            if (this.subCmdMap.containsKey(s1)) {
-                return this.subCmdMap.get(s1);
-            }
-        }
-        return null;
+        return this.subCmdMap.get(args.length > 0?args[0]:"");
     }
 
     public List<String> nextTab(
@@ -69,5 +55,13 @@ public abstract class ACmd implements TabExecutor {
         if (this.subCmdMap.containsKey(s1))
             return this.subCmdMap.get(s1).onTabComplete(sender, cmd, label, removeOneArg(args));
         return null;
+    }
+
+    public List<String> taskTabList(String[] args){
+        if (args.length < 1)
+            return TaskDataHelper.cacheTask.keySet().stream().map(UUID::toString).collect(Collectors.toList());
+        if (args.length > 1)
+            return TaskDataHelper.cacheTask.keySet().stream().map(UUID::toString).filter(s -> s.startsWith(args[0])).collect(Collectors.toList());
+        return Collections.emptyList();
     }
 }

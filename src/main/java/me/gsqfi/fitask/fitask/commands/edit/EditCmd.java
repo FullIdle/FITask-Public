@@ -13,12 +13,14 @@ public class EditCmd extends ACmd {
     public EditCmd(ACmd superCmd) {
         super(superCmd, "edit");
         new EditHelpCmd(this);
-        new RemoveCmd(this);
+        new RemoveTaskCmd(this);
+        new RemoveConditionCmd(this);
+        new RemoveRewardCmd(this);
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
-        ACmd aCmd = nextExSub(args);
+        ACmd aCmd = this.nextExSub(args);
         return aCmd == null ? HelpCmd.instance.onCommand(sender, cmd, label, removeOneArg(args))
                 : aCmd.onCommand(sender, cmd, label, args);
     }

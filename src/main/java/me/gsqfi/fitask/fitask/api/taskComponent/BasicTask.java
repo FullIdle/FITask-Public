@@ -50,6 +50,7 @@ public class BasicTask implements IAdapter<BasicTask>,IDescription{
         }
 
         this.taskName = object.get("taskName").getAsString();
+        this.description = object.get("description").getAsString();
 
         if (object.has("uuid")) {
             this.uuid = UUID.fromString(object.get("uuid").getAsString());
@@ -103,6 +104,8 @@ public class BasicTask implements IAdapter<BasicTask>,IDescription{
             rewardArray.add(con);
         }
         object.add("rewards",rewardArray);
+        object.addProperty("taskName",basicTask.taskName);
+        object.addProperty("description",basicTask.description);
         object.addProperty("uuid",basicTask.uuid.toString());
         return object;
     }

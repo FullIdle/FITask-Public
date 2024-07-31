@@ -1,6 +1,7 @@
 package me.gsqfi.fitask.fitask.commands;
 
 import me.gsqfi.fitask.fitask.Main;
+import me.gsqfi.fitask.fitask.commands.edit.EditCmd;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
@@ -12,13 +13,19 @@ import java.util.List;
 public class MainCmd extends ACmd{
     public MainCmd() {
         super(null,"fitask");
+        new HelpCmd(this);
+        new CreateCmd(this);
+        new InfoCmd(this);
+        new ReloadCmd(this);
+        new ShowCmd(this);
+        new EditCmd(this);
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
-        ACmd aCmd = nextExSub(args);
+        ACmd aCmd = this.nextExSub(args);
         return aCmd == null ? HelpCmd.instance.onCommand(sender, cmd, label, removeOneArg(args))
-                : aCmd.onCommand(sender, cmd, label, args);
+                : aCmd.onCommand(sender, cmd, label, removeOneArg(args));
     }
 
     @Nullable

@@ -1,5 +1,6 @@
-package me.gsqfi.fitask.fitask.commands;
+package me.gsqfi.fitask.fitask.commands.edit;
 
+import me.gsqfi.fitask.fitask.commands.ACmd;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
@@ -8,23 +9,19 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;
 
-public class HelpCmd extends ACmd{
-    public static HelpCmd instance;
-
-    public HelpCmd(ACmd superCmd) {
-        super(superCmd,"help");
-        instance = this;
+public class RemoveConditionCmd extends ACmd {
+    public RemoveConditionCmd(ACmd superCmd) {
+        super(superCmd, "removecondition");
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
-        sender.sendMessage("§aHELP!");
-        return false;
+        return EditHelpCmd.instance.onCommand(sender, cmd, label, args);
     }
 
     @Nullable
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         return Collections.emptyList();
     }
 }
