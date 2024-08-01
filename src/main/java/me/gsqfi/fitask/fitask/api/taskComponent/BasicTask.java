@@ -19,9 +19,9 @@ import java.util.UUID;
 @Getter
 public class BasicTask implements IAdapter<BasicTask>,IDescription{
     @Setter
-    private ICondition[] conditions;
+    private ICondition<?>[] conditions;
     @Setter
-    private IReward[] rewards;
+    private IReward<?>[] rewards;
     private final UUID uuid;
     private File file;
     private String taskName;
@@ -35,7 +35,7 @@ public class BasicTask implements IAdapter<BasicTask>,IDescription{
     @SneakyThrows
     private BasicTask(JsonObject object){
         JsonArray conditionArray = object.get("conditions").getAsJsonArray();
-        this.conditions = new ICondition[conditionArray.size()];
+        this.conditions = new ICondition<?>[conditionArray.size()];
         for (int i = 0; i < conditionArray.size(); i++) {
             JsonObject con = (JsonObject) conditionArray.get(i);
             this.conditions[i] = DataPersistenceHelper.gson.fromJson(con.get("data"),
@@ -63,7 +63,7 @@ public class BasicTask implements IAdapter<BasicTask>,IDescription{
      * 给玩家这个任务的所有奖品
      */
     public void givePlayerRewards(OfflinePlayer player) {
-        for (IReward reward : this.rewards) {
+        for (IReward<?> reward : this.rewards) {
             reward.giveReward(player);
         }
     }
@@ -72,7 +72,7 @@ public class BasicTask implements IAdapter<BasicTask>,IDescription{
      *  满足所有条件返回true
      * */
     public boolean meetAllConditions(OfflinePlayer player) {
-        for (ICondition condition : this.conditions) {
+        for (ICondition<?> condition : this.conditions) {
             if (!condition.meet(player)) {
                 return false;
             }
@@ -89,7 +89,7 @@ public class BasicTask implements IAdapter<BasicTask>,IDescription{
     public JsonElement serialize(BasicTask basicTask, Type type, JsonSerializationContext jsonSerializationContext) {
         JsonObject object = new JsonObject();
         JsonArray conditionArray = new JsonArray();
-        for (ICondition condition : basicTask.conditions) {
+        for (ICondition<?> condition : basicTask.conditions) {
             JsonObject con = new JsonObject();
             con.addProperty("type", condition.getClass().getName());
             con.add("data", DataPersistenceHelper.gson.toJsonTree(condition));
@@ -97,7 +97,7 @@ public class BasicTask implements IAdapter<BasicTask>,IDescription{
         }
         object.add("conditions", conditionArray);
         JsonArray rewardArray = new JsonArray();
-        for (IReward reward : basicTask.rewards) {
+        for (IReward<?> reward : basicTask.rewards) {
             JsonObject con = new JsonObject();
             con.addProperty("type", reward.getClass().getName());
             con.add("data", DataPersistenceHelper.gson.toJsonTree(reward));
@@ -111,7 +111,8 @@ public class BasicTask implements IAdapter<BasicTask>,IDescription{
     }
 
     public void saveSetFile(File file) {
-        this.file = file;
+        if (this.file != file)
+            this.file = file;
         JsonObject object = new JsonObject();
         object.addProperty("type",this.getClass().getName());
         object.add("data",DataPersistenceHelper.gson.toJsonTree(this));
