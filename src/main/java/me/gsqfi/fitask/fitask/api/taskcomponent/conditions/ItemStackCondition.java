@@ -1,4 +1,4 @@
-package me.gsqfi.fitask.fitask.api.taskComponent.conditions;
+package me.gsqfi.fitask.fitask.api.taskcomponent.conditions;
 
 import com.google.gson.*;
 import lombok.Getter;
@@ -17,7 +17,11 @@ public class ItemStackCondition implements ICondition<ItemStackCondition>{
     private int amount;
     private String description;
 
-    public ItemStackCondition(){}
+    public ItemStackCondition(){
+        this.material = Material.STONE;
+        this.amount = 1;
+        this.description = "You need {amount} {material}";
+    }
     private ItemStackCondition(JsonObject object){
         this.material = Material.getMaterial(object.get("material").getAsString());
         this.amount = object.get("amount").getAsInt();

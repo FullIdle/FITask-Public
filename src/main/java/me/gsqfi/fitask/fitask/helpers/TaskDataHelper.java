@@ -4,10 +4,14 @@ import com.google.gson.JsonObject;
 import lombok.SneakyThrows;
 import me.gsqfi.fitask.fitask.Main;
 import me.gsqfi.fitask.fitask.api.FITaskApi;
-import me.gsqfi.fitask.fitask.api.taskComponent.BasicTask;
+import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -35,9 +39,9 @@ public class TaskDataHelper {
                     loadFolder(file);
                     continue;
                 }
-                FileReader fileReader = new FileReader(file);
-                JsonObject object = DataPersistenceHelper.gson.fromJson(fileReader, JsonObject.class);
-                fileReader.close();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8));
+                JsonObject object = DataPersistenceHelper.gson.fromJson(reader, JsonObject.class);
+                reader.close();
                 BasicTask task = DataPersistenceHelper.gson.fromJson(object.get("data").getAsJsonObject(),
                         ((Class<? extends BasicTask>) Class.forName(object.get("type").getAsString())));
                 cacheTask.put(task.getUuid(),task);

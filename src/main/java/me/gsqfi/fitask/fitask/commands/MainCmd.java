@@ -24,8 +24,8 @@ public class MainCmd extends ACmd{
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         ACmd aCmd = this.nextExSub(args);
-        return aCmd == null ? HelpCmd.instance.onCommand(sender, cmd, label, removeOneArg(args))
-                : aCmd.onCommand(sender, cmd, label, removeOneArg(args));
+        if (aCmd == null) aCmd = HelpCmd.instance;
+        return aCmd.onCommand(sender, cmd, label, removeOneArg(args));
     }
 
     @Nullable

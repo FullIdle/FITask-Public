@@ -16,13 +16,18 @@ public class EditCmd extends ACmd {
         new RemoveTaskCmd(this);
         new RemoveConditionCmd(this);
         new RemoveRewardCmd(this);
+        new RenameCmd(this);
+        new AddCondition(this);
+        new AddReward(this);
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         ACmd aCmd = this.nextExSub(args);
-        return aCmd == null ? HelpCmd.instance.onCommand(sender, cmd, label, removeOneArg(args))
-                : aCmd.onCommand(sender, cmd, label, removeOneArg(args));
+        if (aCmd == null) {
+            aCmd = EditHelpCmd.instance;
+        }
+        return aCmd.onCommand(sender, cmd, label, removeOneArg(args));
     }
 
     @Nullable

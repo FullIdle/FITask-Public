@@ -1,4 +1,4 @@
-package me.gsqfi.fitask.fitask.api.taskComponent;
+package me.gsqfi.fitask.fitask.api.taskcomponent;
 
 public interface IDescription {
     String getDescription();

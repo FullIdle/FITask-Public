@@ -1,6 +1,7 @@
 package me.gsqfi.fitask.fitask.commands;
 
-import me.gsqfi.fitask.fitask.api.taskComponent.BasicTask;
+import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
+import me.gsqfi.fitask.fitask.gui.ChatComponentsGui;
 import me.gsqfi.fitask.fitask.helpers.TaskDataHelper;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -20,7 +21,16 @@ public class CreateCmd extends ACmd{
         if (args.length > 0) {
             String name = args[0];
             BasicTask task = new BasicTask();
-            task.saveSetFile(new File(TaskDataHelper.dataFolder, name+".json"));
+            task.setTaskName(name);
+            File file = new File(TaskDataHelper.dataFolder, name + ".json");
+            if (file.exists()) {
+                sender.sendMessage("§cA file with the same name already exists!");
+                return false;
+            }
+            task.saveSetFile(file);
+            TaskDataHelper.addTaskInCache(task);
+            ChatComponentsGui.clearChat(sender);
+            sender.spigot().sendMessage(ChatComponentsGui.info(task));
             sender.sendMessage("§aSuccessfully Create!");
             return false;
         }

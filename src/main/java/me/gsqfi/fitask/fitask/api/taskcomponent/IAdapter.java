@@ -1,4 +1,4 @@
-package me.gsqfi.fitask.fitask.api.taskComponent;
+package me.gsqfi.fitask.fitask.api.taskcomponent;
 
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonSerializer;

@@ -3,13 +3,12 @@ package me.gsqfi.fitask.fitask.api;
 import me.gsqfi.fitask.fitask.Main;
 import me.gsqfi.fitask.fitask.helpers.DataPersistenceHelper;
 import me.gsqfi.fitask.fitask.helpers.TaskDataHelper;
-import me.gsqfi.fitask.fitask.api.taskComponent.BasicTask;
-import me.gsqfi.fitask.fitask.api.taskComponent.conditions.ICondition;
-import me.gsqfi.fitask.fitask.api.taskComponent.rewards.IReward;
+import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
+import me.gsqfi.fitask.fitask.api.taskcomponent.conditions.ICondition;
+import me.gsqfi.fitask.fitask.api.taskcomponent.rewards.IReward;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Collection;
-import java.util.Set;
 import java.util.UUID;
 
 

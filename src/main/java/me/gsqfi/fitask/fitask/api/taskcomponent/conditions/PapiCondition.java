@@ -1,4 +1,4 @@
-package me.gsqfi.fitask.fitask.api.taskComponent.conditions;
+package me.gsqfi.fitask.fitask.api.taskcomponent.conditions;
 
 import com.google.gson.*;
 import lombok.Getter;
@@ -15,7 +15,11 @@ public class PapiCondition implements ICondition<PapiCondition>{
     private String contrastValue;
     private String description;
 
-    public PapiCondition(){}
+    public PapiCondition(){
+        this.papi = "%player_name%";
+        this.contrastValue = "player_name";
+        this.description = "当变量{papi}为{contrastValue}时满足条件";
+    }
     public PapiCondition(JsonObject object){
         this.papi = object.get("papi").getAsString();
         this.contrastValue = object.get("contrastValue").getAsString();
@@ -29,7 +33,8 @@ public class PapiCondition implements ICondition<PapiCondition>{
 
     @Override
     public String getDescription() {
-        return description;
+        return this.description.replace("{papi}",papi)
+                .replace("{contrastValue}",contrastValue);
     }
 
     @Override
@@ -45,4 +50,16 @@ public class PapiCondition implements ICondition<PapiCondition>{
         object.addProperty("description",papiCondition.description);
         return object;
     }
+
+    /*
+    * {
+    *   "type": "me.gsqfi.fitask.fitask.api.taskcomponent.conditions.PapiCondition",
+    *   "data":{
+    *     "papi": "",
+    *     "contrastValue": "",
+    *     "description": ""
+    *   }
+    * }
+    * 该条件的基础模板
+    * */
 }

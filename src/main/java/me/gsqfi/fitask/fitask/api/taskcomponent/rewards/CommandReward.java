@@ -1,4 +1,4 @@
-package me.gsqfi.fitask.fitask.api.taskComponent.rewards;
+package me.gsqfi.fitask.fitask.api.taskcomponent.rewards;
 
 import com.google.gson.*;
 import lombok.Getter;
@@ -15,7 +15,10 @@ public class CommandReward implements IReward<CommandReward>{
     private String command;
     private String description;
 
-    public CommandReward(){}
+    public CommandReward(){
+        this.command = "console: say null command";
+        this.description = "Command Reward";
+    }
     private CommandReward(JsonObject json){
         this.command = json.get("command").getAsString();
         this.description = json.get("description").getAsString();
@@ -53,6 +56,9 @@ public class CommandReward implements IReward<CommandReward>{
 
     @Override
     public JsonElement serialize(CommandReward commandReward, Type type, JsonSerializationContext jsonSerializationContext) {
-        return new JsonPrimitive(commandReward.command);
+        JsonObject object = new JsonObject();
+        object.addProperty("command",commandReward.command);
+        object.addProperty("description",commandReward.description);
+        return object;
     }
 }

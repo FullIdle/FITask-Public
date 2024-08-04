@@ -2,28 +2,33 @@ package me.gsqfi.fitask.fitask.gui;
 
 import com.google.common.collect.Lists;
 import me.gsqfi.fitask.fitask.api.FITaskApi;
-import me.gsqfi.fitask.fitask.api.taskComponent.BasicTask;
-import me.gsqfi.fitask.fitask.api.taskComponent.conditions.ICondition;
-import me.gsqfi.fitask.fitask.api.taskComponent.rewards.IReward;
+import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
+import me.gsqfi.fitask.fitask.api.taskcomponent.conditions.ICondition;
+import me.gsqfi.fitask.fitask.api.taskcomponent.rewards.IReward;
 import net.md_5.bungee.api.chat.*;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class ChatComponentsGui {
-    public static final String[] clearChatMsg;
+    private static final String[] clearChatMsg;
 
     public static void clearChat(CommandSender sender) {
         sender.sendMessage(clearChatMsg);
     }
 
     public static BaseComponent[] show(int page) {
+        Collection<BasicTask> allTask = FITaskApi.getAllTask();
+        if (allTask.isEmpty()) {
+            return new ComponentBuilder("§c§lNo task found").create();
+        }
         if (page < 0) page = 0;
-        int total = (int) Math.ceil((double) FITaskApi.getAllTask().size() / 7);
-        if (page * 7 > FITaskApi.getAllTask().size()) page = total - 1;
+        int total = (int) Math.ceil((double) allTask.size() / 7);
+        if (page * 7 > allTask.size()) page = total - 1;
         int start = page * 7;
 
-        ArrayList<BasicTask> list = Lists.newArrayList(FITaskApi.getAllTask());
+        ArrayList<BasicTask> list = Lists.newArrayList(allTask);
         ComponentBuilder builder = new ComponentBuilder("§7§l[All Tasks]");
         for (int i = start; i < Math.min(start + 7, list.size()); i++) {
             if (list.size() > i) {
@@ -53,13 +58,13 @@ public class ChatComponentsGui {
         ComponentBuilder builder = new ComponentBuilder("§7§l[任务信息]")
                 .append("\n§7§l任务名称: ")
                 .append(new ComponentBuilder("§3§l" + task.getTaskName())
-                        .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7§l点击更改§f(暂不可用!)").create()))
-                        .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/fitask edit name " + task.getUuid()))
+                        .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7§l点击更改任务名称").create()))
+                        .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/fitask edit rename " + task.getUuid()))
                         .create())
                 .append("\n§7§l任务描述: ", ComponentBuilder.FormatRetention.NONE)
                 .append(new ComponentBuilder("§3§l" + task.getDescription())
-                        .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7§l点击更改§f(暂不可用!)").create()))
-                        .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/fitask edit name " + task.getUuid()))
+                        .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7§l点击更改任务描述").create()))
+                        .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/fitask edit  " + task.getUuid()))
                         .create())
                 .append(new ComponentBuilder("\n§7§l任务条件:").create(), ComponentBuilder.FormatRetention.NONE);
         ICondition<?>[] conditions = task.getConditions();
@@ -74,7 +79,7 @@ public class ChatComponentsGui {
         }
         builder.append("\n§7§l  - ", ComponentBuilder.FormatRetention.NONE).append(new ComponentBuilder("§a[+]")
                 .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§3§l点击添加条件").create()))
-                .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/fitask edit addcondition " + task.getUuid()))
+                .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/fitask edit addcondition " + task.getUuid()))
                 .create())
                 .append("\n§7§l任务奖励:", ComponentBuilder.FormatRetention.NONE);
         IReward<?>[] rewards = task.getRewards();
@@ -90,7 +95,7 @@ public class ChatComponentsGui {
 
         builder.append("\n§7§l  - ", ComponentBuilder.FormatRetention.NONE).append(new ComponentBuilder("§a[+]")
                 .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§3§l点击添加奖励").create()))
-                .event(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/fitask edit addreward " + task.getUuid()))
+                .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/fitask edit addreward " + task.getUuid()))
                 .create())
                 .append("\n§7§l任务UID: ", ComponentBuilder.FormatRetention.NONE)
                 .append(new ComponentBuilder("§3§l" + task.getUuid().toString())

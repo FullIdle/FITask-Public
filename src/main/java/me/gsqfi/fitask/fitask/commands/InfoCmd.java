@@ -1,6 +1,6 @@
 package me.gsqfi.fitask.fitask.commands;
 
-import me.gsqfi.fitask.fitask.api.taskComponent.BasicTask;
+import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
 import me.gsqfi.fitask.fitask.gui.ChatComponentsGui;
 import me.gsqfi.fitask.fitask.helpers.TaskDataHelper;
 import org.bukkit.command.Command;
@@ -8,10 +8,8 @@ import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class InfoCmd extends ACmd {
     public InfoCmd(ACmd superCmd) {

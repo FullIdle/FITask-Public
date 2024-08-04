@@ -1,4 +1,4 @@
-package me.gsqfi.fitask.fitask.api.taskComponent;
+package me.gsqfi.fitask.fitask.api.taskcomponent;
 
 import com.google.gson.*;
 import lombok.Getter;
@@ -6,14 +6,14 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import me.gsqfi.fitask.fitask.helpers.DataPersistenceHelper;
 import me.gsqfi.fitask.fitask.helpers.TaskDataHelper;
-import me.gsqfi.fitask.fitask.api.taskComponent.conditions.ICondition;
-import me.gsqfi.fitask.fitask.api.taskComponent.rewards.IReward;
+import me.gsqfi.fitask.fitask.api.taskcomponent.conditions.ICondition;
+import me.gsqfi.fitask.fitask.api.taskcomponent.rewards.IReward;
 import org.bukkit.OfflinePlayer;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.UUID;
 
 @Getter
@@ -24,12 +24,17 @@ public class BasicTask implements IAdapter<BasicTask>,IDescription{
     private IReward<?>[] rewards;
     private final UUID uuid;
     private File file;
+    @Setter
     private String taskName;
     @Setter
     private String description;
 
     public BasicTask() {
-        uuid = UUID.randomUUID();
+        this.uuid = UUID.randomUUID();
+        this.conditions = new ICondition[0];
+        this.rewards = new IReward[0];
+        this.taskName = " ";
+        this.description = " ";
     }
 
     @SneakyThrows
@@ -116,10 +121,10 @@ public class BasicTask implements IAdapter<BasicTask>,IDescription{
         JsonObject object = new JsonObject();
         object.addProperty("type",this.getClass().getName());
         object.add("data",DataPersistenceHelper.gson.toJsonTree(this));
-        try (FileWriter writer = new FileWriter(this.file)){
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(file.toPath()), StandardCharsets.UTF_8))){
             writer.write(DataPersistenceHelper.gson.toJson(object));
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

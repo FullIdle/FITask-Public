@@ -1,12 +1,14 @@
 package me.gsqfi.fitask.fitask;
 
 import me.gsqfi.fitask.fitask.api.FITaskApi;
+import me.gsqfi.fitask.fitask.api.taskcomponent.conditions.PapiCondition;
+import me.gsqfi.fitask.fitask.api.taskcomponent.rewards.CommandReward;
 import me.gsqfi.fitask.fitask.commands.MainCmd;
 import me.gsqfi.fitask.fitask.helpers.DataPersistenceHelper;
 import me.gsqfi.fitask.fitask.helpers.TaskDataHelper;
-import me.gsqfi.fitask.fitask.api.taskComponent.BasicTask;
-import me.gsqfi.fitask.fitask.api.taskComponent.conditions.ItemStackCondition;
-import me.gsqfi.fitask.fitask.api.taskComponent.rewards.ItemStackReward;
+import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
+import me.gsqfi.fitask.fitask.api.taskcomponent.conditions.ItemStackCondition;
+import me.gsqfi.fitask.fitask.api.taskcomponent.rewards.ItemStackReward;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -23,8 +25,10 @@ public class Main extends JavaPlugin {
         pluginManager.registerEvents(new DataPersistenceHelper(),this);
         /*condition*/
         FITaskApi.registerConditions(this,new ItemStackCondition());
+        FITaskApi.registerConditions(this,new PapiCondition());
         /*reward*/
         FITaskApi.registerRewards(this,new ItemStackReward());
+        FITaskApi.registerRewards(this,new CommandReward());
         /*basicTask type register*/
         FITaskApi.registerTasks(this,new BasicTask());
         /*=======*/

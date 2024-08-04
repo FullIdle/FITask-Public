@@ -1,0 +1,9 @@
+storage-method: yaml
+database:
+  address: localhost:3306
+  username: root
+  password: 123456
+
+
+language-msg:
+  0:

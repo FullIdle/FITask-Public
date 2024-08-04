@@ -1,9 +1,8 @@
 package me.gsqfi.fitask.fitask.commands.edit;
 
 import com.google.common.collect.Lists;
-import me.gsqfi.fitask.fitask.api.taskComponent.BasicTask;
-import me.gsqfi.fitask.fitask.api.taskComponent.conditions.ICondition;
-import me.gsqfi.fitask.fitask.api.taskComponent.rewards.IReward;
+import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
+import me.gsqfi.fitask.fitask.api.taskcomponent.rewards.IReward;
 import me.gsqfi.fitask.fitask.commands.ACmd;
 import me.gsqfi.fitask.fitask.gui.ChatComponentsGui;
 import me.gsqfi.fitask.fitask.helpers.TaskDataHelper;
@@ -47,6 +46,7 @@ public class RemoveRewardCmd extends ACmd {
                 task.saveSetFile(task.getFile());
                 ChatComponentsGui.clearChat(sender);
                 sender.spigot().sendMessage(ChatComponentsGui.info(task));
+                sender.sendMessage("§aReward removed!");
                 return false;
             }
             sender.sendMessage("§cTask not found!");
