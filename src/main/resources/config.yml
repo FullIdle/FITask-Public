@@ -1,6 +1,8 @@
 storage-method: yaml
 database:
-  address: localhost:3306
+  ## url: jdbc:mysql://localhost:3306/your_database_name
+  ## url: D:\customPath\playerdata (文件夹)#yaml存储方式时可以设置指定路径，不设置则会存入自己插件配置目录中
+  url: localhost:3306
   username: root
   password: 123456
 

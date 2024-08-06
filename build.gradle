@@ -42,6 +42,8 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 processResources {
-    setFilteringCharset("UTF-8")
-    expand project.properties
+    filesMatching("plugin.yml") {
+        setFilteringCharset("UTF-8")
+        expand project.properties
+    }
 }

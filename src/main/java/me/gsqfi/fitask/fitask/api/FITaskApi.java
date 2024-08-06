@@ -1,6 +1,8 @@
 package me.gsqfi.fitask.fitask.api;
 
+import lombok.Getter;
 import me.gsqfi.fitask.fitask.Main;
+import me.gsqfi.fitask.fitask.api.playerdata.IPlayerData;
 import me.gsqfi.fitask.fitask.helpers.DataPersistenceHelper;
 import me.gsqfi.fitask.fitask.helpers.TaskDataHelper;
 import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
@@ -13,6 +15,9 @@ import java.util.UUID;
 
 
 public class FITaskApi {
+    @Getter
+    public static IPlayerData playerData;
+
     public static Main getPlugin(){
         return Main.getPlugin(Main.class);
     }

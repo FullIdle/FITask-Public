@@ -2,6 +2,9 @@ name: ${rootProject.name}
 main: ${group}
 version: ${version}
 api-version: 1.16
+depend:
+  - PlaceholderAPI
+authors: [GSQ_FI]
 commands:
   fitask:
     description: main cmd
