@@ -1,6 +1,7 @@
 package me.gsqfi.fitask.fitask;
 
 import me.gsqfi.fitask.fitask.api.FITaskApi;
+import me.gsqfi.fitask.fitask.api.playerdata.MySQLData;
 import me.gsqfi.fitask.fitask.api.playerdata.YamlData;
 import me.gsqfi.fitask.fitask.api.taskcomponent.conditions.PapiCondition;
 import me.gsqfi.fitask.fitask.api.taskcomponent.rewards.CommandReward;
@@ -21,12 +22,14 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         reloadConfig();
+        /*papi*/
+        new Papi(this).register();
         /*cmd*/
         new MainCmd().register(this);
         /*listener*/
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new DataPersistenceHelper(),this);
-        pluginManager.registerEvents(FITaskApi.playerData,this);
+        pluginManager.registerEvents(new PlayerListener(),this);
         /*condition*/
         FITaskApi.registerConditions(this,new ItemStackCondition());
         FITaskApi.registerConditions(this,new PapiCondition());
@@ -53,12 +56,21 @@ public class Main extends JavaPlugin {
         super.saveDefaultConfig();
         super.reloadConfig();
         String path = this.getConfig().getString("database.url");
-        if (this.getConfig().getString("storage-method","").equalsIgnoreCase("mysql")) {
+        if (FITaskApi.playerData != null) {
+            FITaskApi.playerData.close();
+        }
 
+        //data
+        if (this.getConfig().getString("storage-method","").equalsIgnoreCase("mysql")) {
+            FITaskApi.playerData = new MySQLData(
+                    this.getConfig().getString("database.url"),
+                    this.getConfig().getString("database.user"),
+                    this.getConfig().getString("database.password")
+            );
         }else{
             File file;
             if (path == null || path.isEmpty()){
-                file = new File(this.getDataFolder(),"playerdata.yml");
+                file = new File(this.getDataFolder(),"playerdata");
             }else{
                 file = new File(path);
             }

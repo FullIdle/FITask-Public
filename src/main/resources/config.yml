@@ -1,8 +1,10 @@
+##存储类型 YAML MYSQL
 storage-method: yaml
 database:
-  ## url: jdbc:mysql://localhost:3306/your_database_name
+  ## url: jdbc:mysql://localhost:3306/fitask
   ## url: D:\customPath\playerdata (文件夹)#yaml存储方式时可以设置指定路径，不设置则会存入自己插件配置目录中
-  url: localhost:3306
+  url: ''
+  ##yaml存储方式不需要用到账户和密码
   username: root
   password: 123456
 

@@ -4,9 +4,6 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.io.File;
 import java.util.HashMap;
@@ -85,18 +82,13 @@ public class YamlData implements IPlayerData {
         this.cache.remove(playerName);
     }
 
+    @Override
+    public void close() {
+        this.cache.clear();
+    }
+
     @SneakyThrows
     public void save(String playerName) {
         this.cache.get(playerName).save(new File(this.dataFolder, playerName + ".yml"));
-    }
-
-    @EventHandler
-    public void onJoin(PlayerJoinEvent e){
-        this.load(e.getPlayer().getName());
-    }
-
-    @EventHandler
-    public void onQuit(PlayerQuitEvent e){
-        this.release(e.getPlayer().getName());
     }
 }
