@@ -45,6 +45,8 @@ public class Papi extends PlaceholderExpansion {
      * %fitask_{uuid}_condition_{slot}_description% 指定任务指定条件描述
      * %fitask_{uuid}_condition_{slot}_meet% 指定任务指定条件是否达成
      * %fitask_{uuid}_reward_{slot}_description% 指定任务指定奖励描述
+     *
+     * %fitask_{uuid}_progress% 指定任务进展(满足的条件量/总条件量)
      * */
     @Override
     public @Nullable String onRequest(OfflinePlayer player, @NotNull String params) {
@@ -99,6 +101,16 @@ public class Papi extends PlaceholderExpansion {
                 return reward.getDescription();
             }
             return "Wrong format -> '"+split[3]+"'";
+        }
+        if (split[1].equalsIgnoreCase("progress")) {
+            ICondition<?>[] conditions = task.getConditions();
+            int i = 0;
+            for (ICondition<?> condition : conditions) {
+                if (condition.meet(player)) {
+                    i++;
+                }
+            }
+            return String.valueOf(((double) (i / conditions.length)));
         }
         return "Wrong format";
     }
