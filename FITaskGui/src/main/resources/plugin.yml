@@ -3,8 +3,10 @@ main: ${group}
 version: ${version}
 api-version: 1.16
 depend:
+  - FITask
   - PlaceholderAPI
+  - FICore
 authors: [GSQ_FI]
 commands:
-  fitaskgui:
+  fitask:
     description: main cmd

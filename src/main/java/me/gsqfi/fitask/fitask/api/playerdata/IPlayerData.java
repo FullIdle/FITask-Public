@@ -1,8 +1,5 @@
 package me.gsqfi.fitask.fitask.api.playerdata;
 
-import org.bukkit.event.Listener;
-
-import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 

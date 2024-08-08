@@ -28,6 +28,8 @@ public class BasicTask implements IAdapter<BasicTask>,IDescription{
     private String taskName;
     @Setter
     private String description;
+    @Setter
+    private String taskType;
 
     public BasicTask() {
         this.uuid = UUID.randomUUID();
@@ -35,6 +37,7 @@ public class BasicTask implements IAdapter<BasicTask>,IDescription{
         this.rewards = new IReward[0];
         this.taskName = " ";
         this.description = " ";
+        this.taskType = " ";
     }
 
     @SneakyThrows
@@ -56,6 +59,7 @@ public class BasicTask implements IAdapter<BasicTask>,IDescription{
 
         this.taskName = object.get("taskName").getAsString();
         this.description = object.get("description").getAsString();
+        this.taskType = object.get("taskType").getAsString();
 
         if (object.has("uuid")) {
             this.uuid = UUID.fromString(object.get("uuid").getAsString());
@@ -111,6 +115,7 @@ public class BasicTask implements IAdapter<BasicTask>,IDescription{
         object.add("rewards",rewardArray);
         object.addProperty("taskName",basicTask.taskName);
         object.addProperty("description",basicTask.description);
+        object.addProperty("taskType",basicTask.taskType);
         object.addProperty("uuid",basicTask.uuid.toString());
         return object;
     }

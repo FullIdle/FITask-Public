@@ -1,0 +1,10 @@
+group = 'me.gsqfi.fitaskgui.fitaskgui.Main'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation this.rootProject
+}

@@ -20,6 +20,9 @@ public class HelpCmd extends ACmd{
             "§7§l  - create [任务名]    §r§l查看开发者信息",
             "§7§l  - show    §r§l列出所有任务",
             "§7§l  - edit [args]    §r§l编辑命令[edit help查看帮助]",
+            "§7§l  - accept [任务UID]    §r§l接受指定任务",
+            "§7§l  - abandon [任务UID]    §r§l放弃指定指令",
+            "§7§l  - acceptedlist    §r§l查看已接受的任务UID",
     };
 
     public HelpCmd(ACmd superCmd) {

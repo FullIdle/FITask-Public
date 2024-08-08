@@ -19,6 +19,9 @@ public class MainCmd extends ACmd{
         new ReloadCmd(this);
         new ShowCmd(this);
         new EditCmd(this);
+        new AcceptCmd(this);
+        new AbandonCmd(this);
+        new AcceptedListCmd(this);
     }
 
     @Override

@@ -55,7 +55,7 @@ public class YamlData implements IPlayerData {
 
     @Override
     public List<UUID> getAllAcceptedTasks(String playerName) {
-        return this.cache.get(playerName).getStringList(playerName)
+        return this.cache.get(playerName).getStringList("accepted")
                 .stream().map(UUID::fromString).collect(Collectors.toList());
     }
 

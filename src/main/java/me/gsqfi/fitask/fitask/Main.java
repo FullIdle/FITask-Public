@@ -12,6 +12,7 @@ import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
 import me.gsqfi.fitask.fitask.api.taskcomponent.conditions.ItemStackCondition;
 import me.gsqfi.fitask.fitask.api.taskcomponent.rewards.ItemStackReward;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -75,6 +76,9 @@ public class Main extends JavaPlugin {
                 file = new File(path);
             }
             FITaskApi.playerData =  new YamlData(file);
+        }
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            FITaskApi.playerData.load(player.getName());
         }
         Bukkit.getScheduler().runTask(this,()->{
             DataPersistenceHelper.gsonInit();

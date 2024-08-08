@@ -7,7 +7,3 @@ database:
   ##yaml存储方式不需要用到账户和密码
   username: root
   password: 123456
-
-
-language-msg:
-  0:
