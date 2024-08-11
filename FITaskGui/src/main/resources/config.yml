@@ -51,3 +51,4 @@ taskInvItemTemplate:
     - '§7§l  - %fitask_{uuid}_condition_{slot}_description%'
     - '§7§l任务奖励:'
     - '§7§l  - %fitask_{uuid}_reward_{slot}_description%'
+    - '§a§l[点击接取或尝试提交]'

@@ -4,7 +4,9 @@ import com.google.gson.JsonObject;
 import lombok.SneakyThrows;
 import me.gsqfi.fitask.fitask.Main;
 import me.gsqfi.fitask.fitask.api.FITaskApi;
+import me.gsqfi.fitask.fitask.api.events.player.TaskDataInitEvent;
 import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
+import org.bukkit.Bukkit;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -29,6 +31,7 @@ public class TaskDataHelper {
             dataFolder.mkdirs();
         }
         loadFolder(dataFolder);
+        Bukkit.getPluginManager().callEvent(new TaskDataInitEvent());
     }
 
     @SneakyThrows

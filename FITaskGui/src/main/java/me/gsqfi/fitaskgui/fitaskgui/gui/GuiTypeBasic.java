@@ -80,8 +80,7 @@ public abstract class GuiTypeBasic extends ListenerInvHolder {
             }
             //click task
             if (this.slotWithTask.containsKey(slot)){
-                BasicTask task = this.slotWithTask.get(slot);
-                clickTaskHandler(e, task);
+                clickTaskHandler(e, this.slotWithTask.get(slot));
                 return;
             }
             //click task type
