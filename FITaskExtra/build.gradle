@@ -1,0 +1,8 @@
+group = 'me.gsqfi.fitaskextra.fitaskextra.Main'
+version = '1.0-SNAPSHOT'
+
+dependencies {
+    implementation this.rootProject
+    implementation 'me.forge.forgedev:ForgeDev:1.12.2'
+    implementation 'com.pixelmonmod.pixelmon:Pixelmon:1.12.2-8.4.3'
+}

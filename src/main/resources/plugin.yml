@@ -6,5 +6,5 @@ depend:
   - PlaceholderAPI
 authors: [GSQ_FI]
 commands:
-  fitaskgui:
+  fitask:
     description: main cmd

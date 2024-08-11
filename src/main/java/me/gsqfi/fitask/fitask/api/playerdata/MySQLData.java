@@ -6,13 +6,16 @@ import lombok.SneakyThrows;
 
 import javax.sql.PooledConnection;
 import java.sql.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 @Getter
 public class MySQLData implements IPlayerData {
     private final MysqlConnectionPoolDataSource poolDataSource = new MysqlConnectionPoolDataSource();
-    private PooledConnection pooledConnection;
-    private final Map<String, List<UUID>> cache = new HashMap<>();
+    private final PooledConnection pooledConnection;
+    private final Map<String, Map<UUID, LocalDateTime>> cache = new HashMap<>();
 
     @SneakyThrows
     public MySQLData(String url, String user, String password) {
@@ -32,6 +35,7 @@ public class MySQLData implements IPlayerData {
             String sql = "CREATE TABLE IF NOT EXISTS player_data ( " +
                     "player_name VARCHAR(255) NOT NULL, " +
                     "task_uuid VARCHAR(255) NOT NULL, " +
+                    "accept_time LONG NOT NULL," +
                     "UNIQUE (player_name, task_uuid))";
             try (
                     Statement statement = conn.createStatement()
@@ -57,11 +61,12 @@ public class MySQLData implements IPlayerData {
 
     @Override
     public boolean accept(String playerName, UUID taskUid) {
-        List<UUID> uuids = this.cache.computeIfAbsent(playerName, k -> new ArrayList<>());
-        if (!uuids.contains(taskUid)) {
-            uuids.add(taskUid);
+        Map<UUID, LocalDateTime> uuids = this.cache.computeIfAbsent(playerName, k -> new HashMap<>());
+        if (!uuids.containsKey(taskUid)) {
+            LocalDateTime now = LocalDateTime.now();
+            uuids.put(taskUid, now);
             //sql
-            String sql = "INSERT INTO player_data (player_name, task_uuid) VALUES (?,?)";
+            String sql = "INSERT INTO player_data (player_name, task_uuid, accept_time) VALUES (?,?,?)";
             try (
                     Connection conn = getConnection();
             ) {
@@ -69,6 +74,7 @@ public class MySQLData implements IPlayerData {
                 try (PreparedStatement prepared = conn.prepareStatement(sql)) {
                     prepared.setString(1, playerName);
                     prepared.setString(2, taskUid.toString());
+                    prepared.setLong(3, now.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
                     prepared.executeUpdate();
                     conn.commit();
                 } catch (SQLException e) {
@@ -92,7 +98,7 @@ public class MySQLData implements IPlayerData {
     @Override
     public boolean abandon(String playerName, UUID taskUid) {
         if (this.cache.containsKey(playerName)) return false;
-        if (this.cache.get(playerName).contains(taskUid)) {
+        if (this.cache.get(playerName).containsKey(taskUid)) {
             this.cache.get(playerName).remove(taskUid);
             //sql
             String sql = "DELETE FROM player_data WHERE player_name = ? AND task_uuid = ?";
@@ -123,18 +129,23 @@ public class MySQLData implements IPlayerData {
     }
 
     @Override
-    public List<UUID> getAllAcceptedTasks(String playerName) {
-        return this.cache.getOrDefault(playerName, new ArrayList<>());
+    public Map<UUID, LocalDateTime> getAllAcceptedTasks(String playerName) {
+        return this.cache.getOrDefault(playerName, new HashMap<>());
     }
 
     @Override
     public boolean isAccept(String playerName, UUID taskUid) {
-        return this.cache.getOrDefault(playerName, new ArrayList<>()).contains(taskUid);
+        return this.cache.getOrDefault(playerName, new HashMap<>()).containsKey(taskUid);
+    }
+
+    @Override
+    public LocalDateTime getAcceptTime(String playerName, UUID taskUid) {
+        return this.cache.get(playerName).get(taskUid);
     }
 
     @Override
     public void load(String playerName) {
-        String sql = "SELECT task_uuid FROM player_data WHERE player_name = ?";
+        String sql = "SELECT task_uuid, accept_time FROM player_data WHERE player_name = ?";
         try (
                 Connection conn = getConnection();
                 PreparedStatement prepared = conn.prepareStatement(sql)
@@ -142,7 +153,9 @@ public class MySQLData implements IPlayerData {
             prepared.setString(1, playerName);
             try (ResultSet rs = prepared.executeQuery()) {
                 if (rs.next()) {
-                    this.cache.computeIfAbsent(playerName, k -> new ArrayList<>()).add(UUID.fromString(rs.getString("task_uuid")));
+                    this.cache.computeIfAbsent(playerName, k -> new HashMap<>())
+                            .put(UUID.fromString(rs.getString("task_uuid")),
+                                    LocalDateTime.ofInstant(Instant.ofEpochMilli(rs.getLong("accept_time")), ZoneId.systemDefault()));
                 }
             }
         } catch (SQLException e) {

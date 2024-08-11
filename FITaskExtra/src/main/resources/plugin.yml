@@ -8,5 +8,5 @@ depend:
   - FICore
 authors: [GSQ_FI]
 commands:
-  fitaskgui:
+  fitaskextra:
     description: main cmd

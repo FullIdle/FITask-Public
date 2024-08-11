@@ -2,14 +2,16 @@ package me.gsqfi.fitask.fitask.api.playerdata;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Getter
@@ -28,11 +30,10 @@ public class YamlData implements IPlayerData {
     @Override
     public boolean accept(String playerName, UUID taskUid) {
         FileConfiguration config = this.cache.get(playerName);
-        List<String> list = config.getStringList("accepted");
+        Set<String> list = config.getConfigurationSection("accepted").getKeys(false);
         String uid = taskUid.toString();
         if (!list.contains(uid)) {
-            list.add(uid);
-            config.set("accepted", list);
+            config.set("accepted."+uid, LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
             this.save(playerName);
             return true;
         }
@@ -42,11 +43,10 @@ public class YamlData implements IPlayerData {
     @Override
     public boolean abandon(String playerName, UUID taskUid) {
         FileConfiguration config = this.cache.get(playerName);
-        List<String> list = config.getStringList("accepted");
+        Set<String> list = config.getConfigurationSection("accepted").getKeys(false);
         String uid = taskUid.toString();
         if (list.contains(uid)) {
-            list.remove(uid);
-            config.set("accepted", list);
+            config.set("accepted."+uid, null);
             this.save(playerName);
             return true;
         }
@@ -54,14 +54,23 @@ public class YamlData implements IPlayerData {
     }
 
     @Override
-    public List<UUID> getAllAcceptedTasks(String playerName) {
-        return this.cache.get(playerName).getStringList("accepted")
-                .stream().map(UUID::fromString).collect(Collectors.toList());
+    public Map<UUID, LocalDateTime> getAllAcceptedTasks(String playerName) {
+        ConfigurationSection section = this.cache.get(playerName).getConfigurationSection("accepted");
+        return section == null ? Collections.emptyMap() :
+                section.getKeys(false).stream().map(UUID::fromString)
+                        .collect(Collectors.toMap(Function.identity(), uid -> this.getAcceptTime(playerName, uid)));
     }
 
     @Override
     public boolean isAccept(String playerName, UUID taskUid) {
-        return this.cache.get(playerName).getStringList(playerName).contains(taskUid.toString());
+        ConfigurationSection section = this.cache.get(playerName).getConfigurationSection("accepted");
+        return section != null && section.getKeys(false).contains(taskUid.toString());
+    }
+
+    @Override
+    public LocalDateTime getAcceptTime(String playerName, UUID taskUid) {
+        long l = this.cache.get(playerName).getLong("accepted." + taskUid.toString());
+        return LocalDateTime.ofInstant(Instant.ofEpochMilli(l), ZoneId.systemDefault());
     }
 
     @SneakyThrows

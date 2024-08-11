@@ -1,0 +1,53 @@
+taskLevel:
+  #任务等级
+  EASY:
+    #FITask的任务配置内的taskType配置值
+    fiTaskType: '初级任务'
+    #显示的类型
+    material: STONE
+    #显示的标题
+    name: '§7§l初级任务'
+    lore:
+      - '§7§l点击只显示初级任务'
+  MEDIUM:
+    fiTaskType: '中级任务'
+    material: IRON_INGOT
+    name: '§r§l中级任务'
+    lore:
+      - '§r§l点击只显示中级任务'
+  HARD:
+    fiTaskType: '高级任务'
+    material: GOLD_INGOT
+    name: '§5§l高级任务'
+    lore:
+      - '§5§l点击只显示高级任务'
+  TOTAL:
+    #这个fiTaskType多余
+    fiTaskType: ''
+    material: DIAMOND
+    name: '§e§l所有任务'
+    lore:
+      - '§e§l点击只显示所有任务'
+guiType:
+  DAILY:
+    ##这个界面的任务每日只能领取一次!
+    title: '§7§l每日任务'
+    taskUid: []
+    #每日任务显示模式 ALL全显示 RANDOM随机显示(几天随机几个后,则不会再显示其他的任务了，第二天重新随机)
+    mode: ALL
+    #哪些位置为任务显示的位置(可以高度自定义到每个任务各一个,不过需要你自己配置)
+    #用来被上下页按钮控制的格子,这里是默认的,[1,10,19,28,37,46]这几个不允许填入!
+    slot: [12,13,14,15,16,21,22,23,24,25,30,31,32,33,34,39,40,41,42,43]
+taskInvItemTemplate:
+  material: BOOK
+  ##{uuid}插件会提供出来
+  name: '§7§l任务-%fitask_{uuid}_name%'
+  ##变量%fitask_{uuid}_[condition/reward]_{slot}_description%会根据任务有多少个[条件/奖励]进行显示的
+  ##当然fitask可以自己编写description,然后下方就不一定需要用到条件和奖励变量了
+  lore:
+    - '§7§l任务类型: %fitask_{uuid}_type%'
+    - '§7§l任务描述: %fitask_{uuid}_description%'
+    - '§7§l任务条件:'
+    - '§7§l  - %fitask_{uuid}_condition_{slot}_description%'
+    - '§7§l任务奖励:'
+    - '§7§l  - %fitask_{uuid}_reward_{slot}_description%'
