@@ -4,7 +4,24 @@ version: ${version}
 api-version: 1.16
 depend:
   - PlaceholderAPI
-authors: [GSQ_FI]
+authors: [ GSQ_FI ]
 commands:
   fitask:
     description: main cmd
+permissions:
+  fitask.cmd.abandon:
+    default: true
+  fitask.cmd.accept:
+    default: true
+  fitask.cmd.acceptedlist:
+    default: true
+  fitask.cmd.create:
+    default: op
+  fitask.cmd.help:
+    default: true
+  fitask.cmd.info:
+    default: op
+  fitask.cmd.reload:
+    default: op
+  fitask.cmd.show:
+    default: op
