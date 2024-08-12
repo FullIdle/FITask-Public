@@ -9,7 +9,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/FITaskExtra" />
+            <option value="$PROJECT_DIR$/FITPokeCR" />
             <option value="$PROJECT_DIR$/FITaskGui" />
           </set>
         </option>

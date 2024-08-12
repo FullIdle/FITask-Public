@@ -1,5 +1,7 @@
 package me.gsqfi.fitask.fitask.api.playerdata;
 
+import com.google.gson.Gson;
+
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.UUID;

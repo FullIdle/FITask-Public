@@ -4,9 +4,10 @@ version: ${project.version}
 api-version: 1.16
 depend:
   - FITask
+  - FITaskGui
   - PlaceholderAPI
   - FICore
 authors: [GSQ_FI]
 commands:
-  fitaskextra:
+  fitpokecr:
     description: main cmd

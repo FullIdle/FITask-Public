@@ -10,11 +10,12 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
-public class ServerDailyGui extends GuiTypeBasic {
-    public ServerDailyGui(OfflinePlayer player, String title) {
-        super(GuiType.DAILY, player, title);
+public class ServerDisposableGui extends GuiTypeBasic{
+    public ServerDisposableGui(OfflinePlayer player, String title) {
+        super(GuiType.DISPOSABLE, player, title);
     }
 
     @Override
@@ -37,20 +38,9 @@ public class ServerDailyGui extends GuiTypeBasic {
             return;
         }
 
-        LocalDate now = LocalDate.now();
         if (FITaskGuiApi.playerData.hasCompleteTask(playerName, taskUid)) {
-            //有完成记录判断是否可以接取
-            LocalDate lastTime = FITaskGuiApi.playerData.getLastCompleteTaskTime(playerName, taskUid).toLocalDate();
-            if (lastTime.isBefore(now)) {
-                //可以接取
-                FITaskApi.playerAcceptTask(playerName, taskUid);
-                whoClicked.sendMessage("§a接取任务成功!");
-            } else {
-                whoClicked.closeInventory();
-                whoClicked.sendMessage("§c该任务今日你已完成!不可重复接取!");
-            }
+            whoClicked.sendMessage("§c该任你已完成!不可重复接取!");
         }else{
-            //没有完成记录直接接取
             FITaskApi.playerAcceptTask(playerName, taskUid);
             whoClicked.sendMessage("§a接取任务成功!");
         }

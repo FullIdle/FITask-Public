@@ -1,4 +1,4 @@
 rootProject.name = 'FITask'
 include 'FITaskGui'
-include 'FITaskExtra'
+include 'FITPokeCR'
 

@@ -11,10 +11,8 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class AcceptedListCmd extends ACmd {
     public AcceptedListCmd(ACmd superCmd) {
@@ -43,13 +41,13 @@ public class AcceptedListCmd extends ACmd {
             player = (Player) sender;
         }
         String nn = player.getName();
-        List<UUID> uuids = FITaskApi.getPlayerData().getAllAcceptedTasks(nn);
+        Map<UUID, LocalDateTime> uuids = FITaskApi.getPlayerData().getAllAcceptedTasks(nn);
         if (uuids.isEmpty()) {
             sender.sendMessage("§cNo tasks found!");
             return false;
         }
         sender.sendMessage("§7§lTaskAccepted:§7[非常简陋-建议不用,没有半点艺术细胞!]");
-        for (UUID uuid : uuids) {
+        for (UUID uuid : uuids.keySet()) {
             BasicTask task = TaskDataHelper.getTask(uuid);
             if (task != null) {
                 sender.sendMessage("§3§l"+task.getUuid().toString());

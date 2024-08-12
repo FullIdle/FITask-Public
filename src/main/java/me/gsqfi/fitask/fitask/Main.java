@@ -85,4 +85,9 @@ public class Main extends JavaPlugin {
             TaskDataHelper.init();
         });
     }
+
+    @Override
+    public void onDisable() {
+        FITaskApi.playerData.close();
+    }
 }

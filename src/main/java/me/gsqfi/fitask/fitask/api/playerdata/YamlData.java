@@ -30,9 +30,9 @@ public class YamlData implements IPlayerData {
     @Override
     public boolean accept(String playerName, UUID taskUid) {
         FileConfiguration config = this.cache.get(playerName);
-        Set<String> list = config.getConfigurationSection("accepted").getKeys(false);
+        ConfigurationSection section = config.getConfigurationSection("accepted");
         String uid = taskUid.toString();
-        if (!list.contains(uid)) {
+        if (section == null || !section.getKeys(false).contains(uid)) {
             config.set("accepted."+uid, LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
             this.save(playerName);
             return true;
@@ -43,9 +43,9 @@ public class YamlData implements IPlayerData {
     @Override
     public boolean abandon(String playerName, UUID taskUid) {
         FileConfiguration config = this.cache.get(playerName);
-        Set<String> list = config.getConfigurationSection("accepted").getKeys(false);
+        ConfigurationSection section = config.getConfigurationSection("accepted");
         String uid = taskUid.toString();
-        if (list.contains(uid)) {
+        if (section != null && section.getKeys(false).contains(uid)) {
             config.set("accepted."+uid, null);
             this.save(playerName);
             return true;

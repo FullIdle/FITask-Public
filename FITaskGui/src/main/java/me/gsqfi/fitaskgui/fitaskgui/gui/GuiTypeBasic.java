@@ -7,14 +7,14 @@ import me.fullidle.ficore.ficore.common.api.ineventory.ListenerInvHolder;
 import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
 import me.gsqfi.fitask.fitask.helpers.TaskDataHelper;
 import me.gsqfi.fitaskgui.fitaskgui.Main;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -85,10 +85,21 @@ public abstract class GuiTypeBasic extends ListenerInvHolder {
             }
             //click task type
             TaskLevel level = TaskLevel.getTaskLevelWithInventorySlot(slot);
-            if (level != null){
+            if (level != null && this.nowLevel != level){
                 setNowLevel(level);
+                Player p = (Player) e.getWhoClicked();
+                Location location = p.getLocation();
+                p.playSound(location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
             }
         });
+    }
+
+    public void open(){
+        Player p = this.player.getPlayer();
+        if (p == null) {
+            throw new RuntimeException("player is null");
+        }
+        p.openInventory(this.inventory);
     }
 
     public abstract void clickTaskHandler(InventoryClickEvent e, BasicTask task);
@@ -96,7 +107,7 @@ public abstract class GuiTypeBasic extends ListenerInvHolder {
     //翻页
     public void changePage(int page) {
         if (page < 0) return;
-        List<BasicTask> taskList = this.guiType.getTaskList();
+        List<BasicTask> taskList = new ArrayList<>(this.guiType.getTaskList());
         if (this.nowLevel != TaskLevel.TOTAL) {
             taskList.removeIf(task -> !task.getTaskType().equals(this.nowLevel.fiTaskType));
         }
@@ -128,6 +139,9 @@ public abstract class GuiTypeBasic extends ListenerInvHolder {
         }
         this.inventory.getItem(level.getInventorySlot()).addUnsafeEnchantment(Enchantment.VANISHING_CURSE, 1);
         this.nowLevel = level;
+        for (Integer i : this.guiType.getSlot()) {
+            this.inventory.setItem(i,null);
+        }
         changePage(0);
     }
 
@@ -239,6 +253,7 @@ public abstract class GuiTypeBasic extends ListenerInvHolder {
             ItemMeta itemMeta = itemStack.getItemMeta();
             itemMeta.setDisplayName(taskLevel.getString("name"));
             itemMeta.setLore(taskLevel.getStringList("lore"));
+            itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             itemStack.setItemMeta(itemMeta);
             value.guiItem = itemStack;
         }
@@ -253,7 +268,6 @@ public abstract class GuiTypeBasic extends ListenerInvHolder {
             value.mode = GuiType.Mode.valueOf(section.getString("mode"));
             value.slot = section.getIntegerList("slot");
         }
-
         {
             //taskInvItemTemplate
             taskInvItemTemplate = new ItemStack(Material.getMaterial(config.getString("taskInvItemTemplate.material")));

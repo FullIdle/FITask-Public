@@ -18,7 +18,7 @@ public class PapiCondition implements ICondition<PapiCondition>{
     public PapiCondition(){
         this.papi = "%player_name%";
         this.contrastValue = "player_name";
-        this.description = "当变量{papi}为{contrastValue}时满足条件";
+        this.description = "The condition is met when the variable {papi} is {contrastValue}";
     }
     public PapiCondition(JsonObject object){
         this.papi = object.get("papi").getAsString();

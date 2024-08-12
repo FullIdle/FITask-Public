@@ -1,6 +1,7 @@
 package me.gsqfi.fitaskgui.fitaskgui.api.playerdata;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
@@ -9,7 +10,7 @@ import java.util.UUID;
 public interface IPlayerLastCompleteData {
     void completeTask(String playerName, UUID taskUid);
     void removeTask(String playerName, UUID taskUid);
-    LocalDate getLastCompleteTaskTime(String playerName,UUID taskUid);
+    LocalDateTime getLastCompleteTaskTime(String playerName, UUID taskUid);
     boolean hasCompleteTask(String playerName, UUID taskUid);
     void load(String playerName);
     void release(String playerName);

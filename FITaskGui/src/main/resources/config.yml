@@ -1,3 +1,14 @@
+##存储类型 YAML MYSQL
+storage-method: YAML
+database:
+  ## 需要指定好数据库fitaskgui <-
+  ## url: jdbc:mysql://localhost:3306/fitaskgui
+  ## url: D:\customPath\playerdata (文件夹)#yaml存储方式时可以设置指定路径，不设置则会存入自己插件配置目录中
+  url: ''
+  ##yaml存储方式不需要用到账户和密码
+  username: root
+  password: 123456
+
 taskLevel:
   #任务等级
   EASY:
@@ -37,6 +48,21 @@ guiType:
     mode: ALL
     #哪些位置为任务显示的位置(可以高度自定义到每个任务各一个,不过需要你自己配置)
     #用来被上下页按钮控制的格子,这里是默认的,[1,10,19,28,37,46]这几个不允许填入!
+    slot: [12,13,14,15,16,21,22,23,24,25,30,31,32,33,34,39,40,41,42,43]
+  WEEKLY:
+    title: '§7§l每周任务'
+    taskUid: []
+    mode: ALL
+    slot: [12,13,14,15,16,21,22,23,24,25,30,31,32,33,34,39,40,41,42,43]
+  MONTHLY:
+    title: '§7§l每月任务'
+    taskUid: []
+    mode: ALL
+    slot: [12,13,14,15,16,21,22,23,24,25,30,31,32,33,34,39,40,41,42,43]
+  DISPOSABLE:
+    title: '§7§l一次性任务'
+    taskUid: []
+    mode: ALL
     slot: [12,13,14,15,16,21,22,23,24,25,30,31,32,33,34,39,40,41,42,43]
 taskInvItemTemplate:
   material: BOOK

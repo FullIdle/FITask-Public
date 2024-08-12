@@ -21,7 +21,7 @@ public class ItemStackReward implements IReward<ItemStackReward> {
     public ItemStackReward(){
         this.material = Material.STONE;
         this.amount = 1;
-        this.description = "ItemStack Reward";
+        this.description = "{material} x{amount}";
     }
 
     public String getDescription() {
