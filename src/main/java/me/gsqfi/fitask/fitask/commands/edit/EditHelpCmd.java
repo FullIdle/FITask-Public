@@ -19,7 +19,8 @@ public class EditHelpCmd extends ACmd {
             "§7§l  - removecondition [任务UID] [slot]  §r§l移除指定任务的条件",
             "§7§l  - removereward [任务UID] [slot]  §r§l移除指定任务的奖励",
             "§7§l  - removetask [任务UID]  §r§l删除指定任务",
-            "§7§l  - rename [任务UID] [新任务名]  §r§l重命名指定任务"
+            "§7§l  - setname [任务UID] [新任务名]  §r§l重命名指定任务",
+            "§7§l  - setdescription [任务UID] [新描述]  §r§l设置指定任务的描述",
     };
 
     public EditHelpCmd(ACmd cmd) {

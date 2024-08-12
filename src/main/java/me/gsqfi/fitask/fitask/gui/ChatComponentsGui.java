@@ -64,7 +64,7 @@ public class ChatComponentsGui {
                 .append("\n§7§l任务描述: ", ComponentBuilder.FormatRetention.NONE)
                 .append(new ComponentBuilder("§3§l" + task.getDescription())
                         .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7§l点击更改任务描述").create()))
-                        .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/fitask edit  " + task.getUuid()))
+                        .event(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/fitask edit redescription " + task.getUuid()))
                         .create())
                 .append(new ComponentBuilder("\n§7§l任务条件:").create(), ComponentBuilder.FormatRetention.NONE);
         ICondition<?>[] conditions = task.getConditions();

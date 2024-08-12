@@ -1,6 +1,5 @@
 package me.gsqfi.fitaskgui.fitaskgui.api.playerdata;
 
-import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -55,7 +54,7 @@ public class YamlPlayerLastCompleteData implements IPlayerLastCompleteData{
 
     @Override
     public boolean hasCompleteTask(String playerName, UUID taskUid) {
-        return Lists.newArrayList(this.cache.get(playerName).getKeys(false)).contains(taskUid.toString());
+        return this.cache.get(playerName).getKeys(false).contains(taskUid.toString());
     }
 
     @SneakyThrows

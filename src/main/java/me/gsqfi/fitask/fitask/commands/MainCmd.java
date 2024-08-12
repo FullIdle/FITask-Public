@@ -29,7 +29,6 @@ public class MainCmd extends ACmd{
         ACmd aCmd = this.nextExSub(args);
         if (aCmd == null) aCmd = HelpCmd.instance;
         String name = aCmd.getName();
-        System.out.println(name);
         if (!sender.hasPermission("fitask.cmd." + name)){
             sender.sendMessage("§cYou don't have permission to use this command.");
             return false;

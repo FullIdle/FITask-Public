@@ -49,7 +49,6 @@ public class Main extends JavaPlugin {
                 "§3    \\/__/   \\:\\__\\    §f\\/__/      /:/  /   \\::/  /   |:|  |  \n" +
                 "§3             \\/__/               §f\\/__/     \\/__/     \\|__| ");
         getLogger().info("§3Plugin enabled!");
-        System.out.println(new File("test").getAbsolutePath());
     }
 
     @Override

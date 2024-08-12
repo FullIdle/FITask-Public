@@ -131,6 +131,7 @@ public abstract class GuiTypeBasic extends ListenerInvHolder {
     }
 
     public void setNowLevel(TaskLevel level) {
+        this.slotWithTask.clear();
         for (TaskLevel value : TaskLevel.values()) {
             ItemStack item = this.inventory.getItem(value.getInventorySlot());
             for (Enchantment ect : item.getEnchantments().keySet()) {
@@ -167,13 +168,13 @@ public abstract class GuiTypeBasic extends ListenerInvHolder {
 
     private static List<String> taskInvPapi(OfflinePlayer player, BasicTask task, String str) {
         ArrayList<String> list = new ArrayList<>();
-        if (str.contains("%fitask_{uuid}_condition_{slot}_description%")) {
+        if (str.contains("%fitask_{uuid}_conditions_{slot}_description%")) {
             for (int i = 0; i < task.getConditions().length; i++) {
                 list.add(PlaceholderAPI.setPlaceholders(player, str
                         .replace("{uuid}", task.getUuid().toString())
                         .replace("{slot}", String.valueOf(i))));
             }
-        } else if (str.contains("%fitask_{uuid}_reward_{slot}_description%")) {
+        } else if (str.contains("%fitask_{uuid}_rewards_{slot}_description%")) {
             for (int i = 0; i < task.getRewards().length; i++) {
                 list.add(PlaceholderAPI.setPlaceholders(player, str
                         .replace("{uuid}", task.getUuid().toString())

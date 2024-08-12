@@ -2,7 +2,6 @@ package me.gsqfi.fitpokecr.fitpokecr;
 
 import com.pixelmonmod.pixelmon.api.events.BeatWildPixelmonEvent;
 import com.pixelmonmod.pixelmon.api.events.CaptureEvent;
-import com.pixelmonmod.pixelmon.enums.EnumSpecies;
 import lombok.SneakyThrows;
 import me.fullidle.ficore.ficore.common.api.event.ForgeEvent;
 import me.gsqfi.fitask.fitask.api.FITaskApi;
@@ -13,7 +12,6 @@ import me.gsqfi.fitpokecr.fitpokecr.conditions.BeatPokeCondition;
 import me.gsqfi.fitpokecr.fitpokecr.conditions.CapturePokeAmountCondition;
 import me.gsqfi.fitpokecr.fitpokecr.conditions.CapturePokeCondition;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -23,9 +21,7 @@ import java.util.UUID;
 public class PlayerListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        String name = player.getName();
-        Main.playerData.load(name);
+        Main.playerData.load(event.getPlayer().getName());
     }
 
     @EventHandler

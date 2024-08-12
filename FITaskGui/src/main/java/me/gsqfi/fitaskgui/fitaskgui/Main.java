@@ -47,9 +47,9 @@ public class Main extends JavaPlugin implements TabExecutor, Listener {
                 }
                 FITaskGuiApi.playerData = new YamlPlayerLastCompleteData(file);
             }
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                FITaskGuiApi.playerData.load(player.getName());
-            }
+        }
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            FITaskGuiApi.playerData.load(player.getName());
         }
 
         Bukkit.getScheduler().runTask(this,()->{
@@ -65,14 +65,13 @@ public class Main extends JavaPlugin implements TabExecutor, Listener {
         MainCmd mainCmd = new MainCmd();
         command.setExecutor(mainCmd);
         command.setTabCompleter(mainCmd);
+        getServer().getPluginManager().registerEvents(this, this);
         getLogger().info("§aPlugin loaded!");
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        String name = player.getName();
-        FITaskGuiApi.playerData.load(name);
+        FITaskGuiApi.playerData.load(event.getPlayer().getName());
     }
 
     @EventHandler

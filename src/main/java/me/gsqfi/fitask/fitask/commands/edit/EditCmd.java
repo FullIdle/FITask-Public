@@ -15,7 +15,7 @@ public class EditCmd extends ACmd {
         new RemoveTaskCmd(this);
         new RemoveConditionCmd(this);
         new RemoveRewardCmd(this);
-        new RenameCmd(this);
+        new SetNameCmd(this);
         new AddCondition(this);
         new AddReward(this);
     }

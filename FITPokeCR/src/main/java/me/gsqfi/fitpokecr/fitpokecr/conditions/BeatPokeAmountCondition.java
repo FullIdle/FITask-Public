@@ -26,7 +26,7 @@ public class BeatPokeAmountCondition implements ICondition<BeatPokeAmountConditi
 
     public BeatPokeAmountCondition() {
         amount = 1;
-        this.description = "Capture {amount} pokemon";
+        this.description = "Beat {amount} pokemon";
     }
 
     private BeatPokeAmountCondition(JsonObject object) {

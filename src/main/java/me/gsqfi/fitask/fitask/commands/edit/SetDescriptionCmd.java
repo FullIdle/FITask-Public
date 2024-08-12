@@ -1,22 +1,20 @@
 package me.gsqfi.fitask.fitask.commands.edit;
 
 import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
-import me.gsqfi.fitask.fitask.api.taskcomponent.IAdapter;
-import me.gsqfi.fitask.fitask.api.taskcomponent.conditions.ICondition;
 import me.gsqfi.fitask.fitask.commands.ACmd;
 import me.gsqfi.fitask.fitask.gui.ChatComponentsGui;
-import me.gsqfi.fitask.fitask.helpers.DataPersistenceHelper;
 import me.gsqfi.fitask.fitask.helpers.TaskDataHelper;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
-public class RenameCmd extends ACmd {
-    public RenameCmd(ACmd cmd) {
-        super(cmd,"rename");
+public class SetDescriptionCmd extends ACmd {
+    public SetDescriptionCmd(ACmd cmd) {
+        super(cmd, "setdescription");
     }
 
     @Override
@@ -34,7 +32,11 @@ public class RenameCmd extends ACmd {
                 sender.sendMessage("§cTask not found!");
                 return false;
             }
-            task.setTaskName(args[1]);
+            StringBuilder builder = new StringBuilder();
+            for (int i = 1; i < args.length; i++) {
+                builder.append(args[i]);
+            }
+            task.setDescription(builder.toString());
             task.saveSetFile(task.getFile());
             ChatComponentsGui.clearChat(sender);
             sender.spigot().sendMessage(ChatComponentsGui.info(task));
