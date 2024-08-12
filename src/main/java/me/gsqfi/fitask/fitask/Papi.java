@@ -42,9 +42,9 @@ public class Papi extends PlaceholderExpansion {
     /*
      * %fitask_{uuid}_name% 指定任务名
      * %fitask_{uuid}_description% 指定任务描述
-     * %fitask_{uuid}_condition_{slot}_description% 指定任务指定条件描述
-     * %fitask_{uuid}_condition_{slot}_meet% 指定任务指定条件是否达成
-     * %fitask_{uuid}_reward_{slot}_description% 指定任务指定奖励描述
+     * %fitask_{uuid}_conditions_{slot}_description% 指定任务指定条件描述
+     * %fitask_{uuid}_conditions_{slot}_meet% 指定任务指定条件是否达成
+     * %fitask_{uuid}_rewards_{slot}_description% 指定任务指定奖励描述
      * %fitask_{uuid}_type% 指定任务指定奖励是否已发放
      *
      * %fitask_{uuid}_progress% 指定任务进展(满足的条件量/总条件量)

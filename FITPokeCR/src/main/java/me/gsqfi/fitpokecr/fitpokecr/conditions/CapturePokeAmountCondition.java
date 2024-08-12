@@ -60,8 +60,8 @@ public class CapturePokeAmountCondition implements ICondition<CapturePokeAmountC
     @Override
     public JsonElement serialize(CapturePokeAmountCondition capturePokemon, Type type, JsonSerializationContext jsonSerializationContext) {
         JsonObject object = new JsonObject();
-        object.addProperty("amount", capturePokemon.getAmount());
-        object.addProperty("description", capturePokemon.getDescription());
+        object.addProperty("amount", capturePokemon.amount);
+        object.addProperty("description", capturePokemon.description);
         return object;
     }
 

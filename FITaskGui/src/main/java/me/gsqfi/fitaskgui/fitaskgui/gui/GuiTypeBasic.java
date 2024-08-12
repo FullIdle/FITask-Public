@@ -161,6 +161,7 @@ public abstract class GuiTypeBasic extends ListenerInvHolder {
             list.addAll(taskInvPapi(player, task, s));
         }
         itemMeta.setLore(list);
+        itemStack.setItemMeta(itemMeta);
         return itemStack;
     }
 
@@ -179,8 +180,7 @@ public abstract class GuiTypeBasic extends ListenerInvHolder {
                         .replace("{slot}", String.valueOf(i))));
             }
         } else {
-            list.add(PlaceholderAPI.setPlaceholders(player, str
-                    .replace("{uuid}", task.getUuid().toString())));
+            list.add(PlaceholderAPI.setPlaceholders(player, str.replace("{uuid}", task.getUuid().toString())));
         }
         return list;
     }

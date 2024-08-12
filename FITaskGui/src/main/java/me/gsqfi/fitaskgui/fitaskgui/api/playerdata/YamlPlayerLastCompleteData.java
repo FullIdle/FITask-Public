@@ -1,5 +1,6 @@
 package me.gsqfi.fitaskgui.fitaskgui.api.playerdata;
 
+import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -16,10 +17,11 @@ import java.util.UUID;
 @Getter
 public class YamlPlayerLastCompleteData implements IPlayerLastCompleteData{
     private final File folder;
-    private final Map<String, FileConfiguration> cache = new HashMap<>();
+    private final Map<String, FileConfiguration> cache;
 
     public YamlPlayerLastCompleteData(File folder){
         this.folder = folder;
+        this.cache = new HashMap<>();
         if (!this.folder.exists()) {
             this.folder.mkdirs();
         }
@@ -53,7 +55,7 @@ public class YamlPlayerLastCompleteData implements IPlayerLastCompleteData{
 
     @Override
     public boolean hasCompleteTask(String playerName, UUID taskUid) {
-        return this.cache.get(playerName).getKeys(false).contains(taskUid.toString());
+        return Lists.newArrayList(this.cache.get(playerName).getKeys(false)).contains(taskUid.toString());
     }
 
     @SneakyThrows

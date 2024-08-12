@@ -31,6 +31,8 @@ public class ServerMonthlyGui extends GuiTypeBasic{
                 FITaskGuiApi.playerData.completeTask(playerName, taskUid);
                 task.givePlayerRewards(player);
                 whoClicked.sendMessage("§a完成任务成功!奖励已发放!");
+                //不是直接在FITaskApi调用的的放弃不触发事件
+                FITaskApi.playerData.abandon(playerName, taskUid);
                 Bukkit.getPluginManager().callEvent(new TaskCompleteEvent(player.getPlayer(), task));
             }else {
                 whoClicked.sendMessage("§c提交失败任务条件不满足!");

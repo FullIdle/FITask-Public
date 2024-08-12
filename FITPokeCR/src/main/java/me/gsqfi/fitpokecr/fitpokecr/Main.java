@@ -1,7 +1,6 @@
 package me.gsqfi.fitpokecr.fitpokecr;
 
 import me.gsqfi.fitask.fitask.api.FITaskApi;
-import me.gsqfi.fitaskgui.fitaskgui.api.events.TaskCompleteEvent;
 import me.gsqfi.fitpokecr.fitpokecr.conditions.BeatPokeAmountCondition;
 import me.gsqfi.fitpokecr.fitpokecr.conditions.BeatPokeCondition;
 import me.gsqfi.fitpokecr.fitpokecr.conditions.CapturePokeAmountCondition;
@@ -13,15 +12,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
-public class Main extends JavaPlugin implements Listener {
+public class Main extends JavaPlugin {
     public static Main plugin;
     public static IPlayerData playerData;
 
@@ -69,31 +65,13 @@ public class Main extends JavaPlugin implements Listener {
         //cmd
         getCommand("fitpokecr").setExecutor(this);
         //listener
-        Bukkit.getPluginManager().registerEvents(this, this);
+        Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
         getLogger().info("§aFITaskExtra has been enabled!");
     }
 
     @Override
     public void onDisable() {
         playerData.close();
-    }
-
-    //event
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        String name = player.getName();
-        playerData.load(name);
-    }
-
-    @EventHandler
-    public void onPlayerQuit(PlayerJoinEvent event) {
-        playerData.release(event.getPlayer().getName());
-    }
-
-    @EventHandler
-    public void onTaskComplete(TaskCompleteEvent e) {
-        playerData.removePlayerTask(e.getPlayer().getName(),e.getTask().getUuid());
     }
 
     //reloadcmd

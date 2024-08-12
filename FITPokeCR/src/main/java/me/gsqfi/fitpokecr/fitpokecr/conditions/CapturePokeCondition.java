@@ -65,9 +65,9 @@ public class CapturePokeCondition implements ICondition<CapturePokeCondition> {
     @Override
     public JsonElement serialize(CapturePokeCondition capturePokemon, Type type, JsonSerializationContext jsonSerializationContext) {
         JsonObject object = new JsonObject();
-        object.addProperty("species", capturePokemon.getSpecies().getLocalizedName());
-        object.addProperty("amount", capturePokemon.getAmount());
-        object.addProperty("description", capturePokemon.getDescription());
+        object.addProperty("species", capturePokemon.species.getLocalizedName());
+        object.addProperty("amount", capturePokemon.amount);
+        object.addProperty("description", capturePokemon.description);
         return object;
     }
 

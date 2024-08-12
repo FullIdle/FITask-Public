@@ -68,13 +68,13 @@ taskInvItemTemplate:
   material: BOOK
   ##{uuid}插件会提供出来
   name: '§7§l任务-%fitask_{uuid}_name%'
-  ##变量%fitask_{uuid}_[condition/reward]_{slot}_description%会根据任务有多少个[条件/奖励]进行显示的
+  ##变量%fitask_{uuid}_[conditions/rewards]_{slot}_description%会根据任务有多少个[条件/奖励]进行显示的
   ##当然fitask可以自己编写description,然后下方就不一定需要用到条件和奖励变量了
   lore:
     - '§7§l任务类型: %fitask_{uuid}_type%'
     - '§7§l任务描述: %fitask_{uuid}_description%'
     - '§7§l任务条件:'
-    - '§7§l  - %fitask_{uuid}_condition_{slot}_description%'
+    - '§7§l  - %fitask_{uuid}_conditions_{slot}_description%'
     - '§7§l任务奖励:'
-    - '§7§l  - %fitask_{uuid}_reward_{slot}_description%'
+    - '§7§l  - %fitask_{uuid}_rewards_{slot}_description%'
     - '§a§l[点击接取或尝试提交]'

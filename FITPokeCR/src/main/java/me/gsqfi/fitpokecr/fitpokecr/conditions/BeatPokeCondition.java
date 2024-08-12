@@ -26,7 +26,7 @@ public class BeatPokeCondition implements ICondition<BeatPokeCondition> {
 
     public BeatPokeCondition() {
         species = EnumSpecies.Abomasnow;
-        amount = 0;
+        amount = 1;
         this.description = "Beat {species} x{amount}";
     }
 
@@ -66,9 +66,9 @@ public class BeatPokeCondition implements ICondition<BeatPokeCondition> {
     @Override
     public JsonElement serialize(BeatPokeCondition beatPokeCondition, Type type, JsonSerializationContext jsonSerializationContext) {
         JsonObject object = new JsonObject();
-        object.addProperty("species", beatPokeCondition.getSpecies().name());
-        object.addProperty("amount", beatPokeCondition.getAmount());
-        object.addProperty("description", beatPokeCondition.getDescription());
+        object.addProperty("species", beatPokeCondition.species.name());
+        object.addProperty("amount", beatPokeCondition.amount);
+        object.addProperty("description", beatPokeCondition.description);
         return object;
     }
 

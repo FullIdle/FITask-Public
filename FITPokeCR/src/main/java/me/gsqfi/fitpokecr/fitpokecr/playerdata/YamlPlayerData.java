@@ -12,10 +12,11 @@ import java.util.UUID;
 
 public class YamlPlayerData implements IPlayerData{
     private final File folder;
-    private final Map<String, FileConfiguration> cache = new HashMap<>();
+    private final Map<String, FileConfiguration> cache;
 
     public YamlPlayerData(File folder){
         this.folder = folder;
+        this.cache = new HashMap<>();
         if (!this.folder.exists()) {
             this.folder.mkdirs();
         }
@@ -23,6 +24,9 @@ public class YamlPlayerData implements IPlayerData{
 
     @Override
     public String getPlayerTaskCondition(String playerName, UUID taskUid, Class<? extends ICondition> condition) {
+        if (!this.cache.containsKey(playerName)) {
+            this.load(playerName);
+        }
         return this.cache.get(playerName).getString(String.format("%s.%s", taskUid.toString(), condition.getName()));
     }
 
@@ -45,9 +49,17 @@ public class YamlPlayerData implements IPlayerData{
         config.set(taskUid.toString(),null);
     }
 
+    @SneakyThrows
     @Override
     public void load(String playerName) {
-        this.cache.put(playerName, YamlConfiguration.loadConfiguration(getPlayerFile(playerName)));
+        File file = getPlayerFile(playerName);
+        if (!file.exists()) {
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdirs();
+            }
+            file.createNewFile();
+        }
+        this.cache.put(playerName, YamlConfiguration.loadConfiguration(file));
     }
 
     @Override

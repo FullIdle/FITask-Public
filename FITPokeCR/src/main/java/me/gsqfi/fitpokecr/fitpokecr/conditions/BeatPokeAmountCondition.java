@@ -4,10 +4,13 @@ import com.google.gson.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import me.fullidle.ficore.ficore.common.api.event.ForgeEvent;
 import me.gsqfi.fitask.fitask.api.FITaskApi;
 import me.gsqfi.fitask.fitask.api.taskcomponent.conditions.ICondition;
 import me.gsqfi.fitpokecr.fitpokecr.Main;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 
 import java.lang.reflect.Type;
 import java.util.UUID;
@@ -17,12 +20,12 @@ import java.util.UUID;
  */
 @Getter
 @Setter
-public class BeatPokeAmountCondition implements ICondition<BeatPokeAmountCondition> {
+public class BeatPokeAmountCondition implements ICondition<BeatPokeAmountCondition>, Listener {
     private int amount;
     private String description;
 
     public BeatPokeAmountCondition() {
-        amount = 0;
+        amount = 1;
         this.description = "Capture {amount} pokemon";
     }
 
@@ -59,8 +62,8 @@ public class BeatPokeAmountCondition implements ICondition<BeatPokeAmountConditi
     @Override
     public JsonElement serialize(BeatPokeAmountCondition beatPokeCondition, Type type, JsonSerializationContext jsonSerializationContext) {
         JsonObject object = new JsonObject();
-        object.addProperty("amount", beatPokeCondition.getAmount());
-        object.addProperty("description", beatPokeCondition.getDescription());
+        object.addProperty("amount", beatPokeCondition.amount);
+        object.addProperty("description", beatPokeCondition.description);
         return object;
     }
 
