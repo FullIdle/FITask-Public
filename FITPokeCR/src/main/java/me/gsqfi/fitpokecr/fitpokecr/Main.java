@@ -1,10 +1,7 @@
 package me.gsqfi.fitpokecr.fitpokecr;
 
 import me.gsqfi.fitask.fitask.api.FITaskApi;
-import me.gsqfi.fitpokecr.fitpokecr.conditions.BeatPokeAmountCondition;
-import me.gsqfi.fitpokecr.fitpokecr.conditions.BeatPokeCondition;
-import me.gsqfi.fitpokecr.fitpokecr.conditions.CapturePokeAmountCondition;
-import me.gsqfi.fitpokecr.fitpokecr.conditions.CapturePokeCondition;
+import me.gsqfi.fitpokecr.fitpokecr.conditions.*;
 import me.gsqfi.fitpokecr.fitpokecr.playerdata.IPlayerData;
 import me.gsqfi.fitpokecr.fitpokecr.playerdata.MySQLPlayerData;
 import me.gsqfi.fitpokecr.fitpokecr.playerdata.YamlPlayerData;
@@ -60,7 +57,9 @@ public class Main extends JavaPlugin {
                 new BeatPokeAmountCondition(),
                 new BeatPokeCondition(),
                 new CapturePokeAmountCondition(),
-                new CapturePokeCondition()
+                new CapturePokeCondition(),
+                new BeatNPCAmountCondition(),
+                new BeatNPCCondition()
         );
         //cmd
         getCommand("fitpokecr").setExecutor(this);
