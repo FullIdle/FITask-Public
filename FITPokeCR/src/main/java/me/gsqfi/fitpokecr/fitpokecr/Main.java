@@ -59,7 +59,12 @@ public class Main extends JavaPlugin {
                 new CapturePokeAmountCondition(),
                 new CapturePokeCondition(),
                 new BeatNPCAmountCondition(),
-                new BeatNPCCondition()
+                new BeatNPCCondition(),
+                new ActivateShrineCondition(),
+                new ActivateShrineAmountCondition(),
+                new EvolvePokeCondition(),
+                new PickApricornAmountCondition(),
+                new PickApricornCondition()
         );
         //cmd
         getCommand("fitpokecr").setExecutor(this);
