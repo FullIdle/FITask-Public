@@ -10,3 +10,16 @@ authors: [GSQ_FI]
 commands:
   fitaskgui:
     description: main cmd
+permissions:
+  fitaskgui.cmd.daily:
+    default: true
+  fitaskgui.cmd.weekly:
+    default: true
+  fitaskgui.cmd.monthly:
+    default: true
+  fitaskgui.cmd.disposable:
+    default: true
+  fitaskgui.cmd.reload:
+    default: op
+  fitaskgui.cmd.help:
+    default: true

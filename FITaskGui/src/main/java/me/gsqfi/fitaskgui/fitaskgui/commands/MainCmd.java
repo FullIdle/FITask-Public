@@ -23,6 +23,10 @@ public class MainCmd extends ACmd {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         ACmd aCmd = this.nextExSub(args);
         if (aCmd == null) aCmd = HelpCmd.instance;
+        if (!sender.hasPermission("fitaskgui.cmd." + aCmd.getName())){
+            sender.sendMessage("§cYou don't have permission to use this command.");
+            return false;
+        }
         return aCmd.onCommand(sender, cmd, label, removeOneArg(args));
     }
 
