@@ -1,9 +1,8 @@
 group = 'me.gsqfi.fitpokecr.fitpokecr.Main'
-version = '1.2-SNAPSHOT'
+version = '1.3-SNAPSHOT'
 
 dependencies {
     implementation this.rootProject
-    implementation project(path: ':FITaskGui')
     implementation 'me.forge.forgedev:ForgeDev:1.12.2'
     implementation 'com.pixelmonmod.pixelmon:Pixelmon:1.12.2-8.4.3'
 }

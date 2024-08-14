@@ -1,4 +1,4 @@
-package me.gsqfi.fitask.fitask.api.events.player;
+package me.gsqfi.fitask.fitask.api.events;
 
 import lombok.Getter;
 import org.bukkit.event.Event;

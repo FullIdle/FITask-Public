@@ -4,8 +4,8 @@ import com.pixelmonmod.pixelmon.api.events.*;
 import lombok.SneakyThrows;
 import me.fullidle.ficore.ficore.common.api.event.ForgeEvent;
 import me.gsqfi.fitask.fitask.api.FITaskApi;
+import me.gsqfi.fitask.fitask.api.events.player.PlayerTaskCompleteEvent;
 import me.gsqfi.fitask.fitask.api.taskcomponent.conditions.ICondition;
-import me.gsqfi.fitaskgui.fitaskgui.api.events.TaskCompleteEvent;
 import me.gsqfi.fitpokecr.fitpokecr.conditions.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
@@ -26,8 +26,8 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onTaskComplete(TaskCompleteEvent e) {
-        Main.playerData.removePlayerTask(e.getPlayer().getName(), e.getTask().getUuid());
+    public void onTaskComplete(PlayerTaskCompleteEvent e) {
+        Main.playerData.removePlayerTask(e.getPlayerName(), e.getTaskUid());
     }
 
     @SneakyThrows

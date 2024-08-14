@@ -2,10 +2,7 @@ package me.gsqfi.fitaskgui.fitaskgui.gui;
 
 import me.gsqfi.fitask.fitask.api.FITaskApi;
 import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
-import me.gsqfi.fitask.fitask.helpers.TaskDataHelper;
 import me.gsqfi.fitaskgui.fitaskgui.api.FITaskGuiApi;
-import me.gsqfi.fitaskgui.fitaskgui.api.events.TaskCompleteEvent;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -27,14 +24,9 @@ public class ServerDailyGui extends GuiTypeBasic {
         whoClicked.closeInventory();
 
         if (FITaskApi.playerHasAcceptedTask(playerName, taskUid)) {
-            if (task.meetAllConditions(player)) {
-                FITaskGuiApi.playerData.completeTask(playerName, taskUid);
-                task.givePlayerRewards(player);
+            if (FITaskApi.playerSubmitTask(playerName,taskUid)){
                 whoClicked.sendMessage("§a完成任务成功!奖励已发放!");
-                //不是直接在FITaskApi调用的的放弃不触发事件
-                FITaskApi.playerData.abandon(playerName, taskUid);
-                Bukkit.getPluginManager().callEvent(new TaskCompleteEvent(player.getPlayer(), task));
-            }else {
+            }else{
                 whoClicked.sendMessage("§c提交失败任务条件不满足!");
             }
             return;
