@@ -23,7 +23,7 @@ public class HelpCmd extends ACmd{
             "§7§l  - accept [任务UID]    §r§l接受指定任务",
             "§7§l  - abandon [任务UID]    §r§l放弃指定指令",
             "§7§l  - acceptedlist    §r§l查看已接受的任务UID",
-
+            "§7§l  - submit [任务UID]    §r§l尝试提交指定任务"
     };
 
     public HelpCmd(ACmd superCmd) {
