@@ -4,6 +4,7 @@ import com.google.gson.*;
 import lombok.Getter;
 import lombok.Setter;
 import me.clip.placeholderapi.PlaceholderAPI;
+import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
 import org.bukkit.OfflinePlayer;
 
 import java.lang.reflect.Type;
@@ -14,6 +15,7 @@ public class PapiCondition implements ICondition<PapiCondition>{
     private String papi;
     private String contrastValue;
     private String description;
+    private BasicTask locatedTask;
 
     public PapiCondition(){
         this.papi = "%player_name%";

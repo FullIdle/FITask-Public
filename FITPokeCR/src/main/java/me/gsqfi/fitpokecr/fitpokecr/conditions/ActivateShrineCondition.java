@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import me.gsqfi.fitask.fitask.api.FITaskApi;
+import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
 import me.gsqfi.fitask.fitask.api.taskcomponent.conditions.ICondition;
 import me.gsqfi.fitpokecr.fitpokecr.Main;
 import org.bukkit.OfflinePlayer;
@@ -23,6 +24,7 @@ public class ActivateShrineCondition implements ICondition<ActivateShrineConditi
     private EnumShrine type;
     private int amount;
     private String description;
+    private BasicTask locatedTask;
 
     public ActivateShrineCondition() {
         this.type = EnumShrine.Articuno;
@@ -42,20 +44,14 @@ public class ActivateShrineCondition implements ICondition<ActivateShrineConditi
     @SneakyThrows
     @Override
     public boolean meet(OfflinePlayer player) {
-        for (UUID uuid : FITaskApi.playerData.getAllAcceptedTasks(player.getName()).keySet()) {
-            for (ICondition<?> condition : FITaskApi.getTask(uuid).getConditions()) {
-                if (condition == this) {
-                    String data = Main.playerData.getPlayerTaskCondition(player.getName(), uuid, ActivateShrineCondition.class);
-                    if (data == null) {
-                        return false;
-                    }
-                    YamlConfiguration yaml = new YamlConfiguration();
-                    yaml.loadFromString(data);
-                    return yaml.getInt(this.type.name()) >= this.amount;
-                }
-            }
+        String data = Main.playerData.getPlayerTaskCondition(player.getName(), this.locatedTask.getUuid(),
+                ActivateShrineCondition.class);
+        if (data == null) {
+            return false;
         }
-        return false;
+        YamlConfiguration yaml = new YamlConfiguration();
+        yaml.loadFromString(data);
+        return yaml.getInt(this.type.name()) >= this.amount;
     }
 
     @Override

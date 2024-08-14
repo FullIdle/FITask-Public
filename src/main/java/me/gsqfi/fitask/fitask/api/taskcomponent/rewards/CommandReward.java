@@ -4,6 +4,7 @@ import com.google.gson.*;
 import lombok.Getter;
 import lombok.Setter;
 import me.clip.placeholderapi.PlaceholderAPI;
+import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
@@ -14,6 +15,7 @@ import java.lang.reflect.Type;
 public class CommandReward implements IReward<CommandReward>{
     private String command;
     private String description;
+    private BasicTask locatedTask;
 
     public CommandReward(){
         this.command = "console: say null command";
@@ -23,7 +25,6 @@ public class CommandReward implements IReward<CommandReward>{
         this.command = json.get("command").getAsString();
         this.description = json.get("description").getAsString();
     }
-
 
     @Override
     public void giveReward(OfflinePlayer player) {

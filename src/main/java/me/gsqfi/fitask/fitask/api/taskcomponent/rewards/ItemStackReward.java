@@ -3,6 +3,7 @@ package me.gsqfi.fitask.fitask.api.taskcomponent.rewards;
 import com.google.gson.*;
 import lombok.Getter;
 import lombok.Setter;
+import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Item;
@@ -17,6 +18,7 @@ public class ItemStackReward implements IReward<ItemStackReward> {
     private Material material;
     private int amount;
     private String description;
+    private BasicTask locatedTask;
 
     public ItemStackReward(){
         this.material = Material.STONE;

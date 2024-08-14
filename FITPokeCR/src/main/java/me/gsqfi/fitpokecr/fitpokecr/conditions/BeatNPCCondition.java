@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import me.gsqfi.fitask.fitask.api.FITaskApi;
+import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
 import me.gsqfi.fitask.fitask.api.taskcomponent.conditions.ICondition;
 import me.gsqfi.fitpokecr.fitpokecr.Main;
 import org.bukkit.OfflinePlayer;
@@ -22,6 +23,7 @@ public class BeatNPCCondition implements ICondition<BeatNPCCondition> {
     private UUID uuid;
     private int amount;
     private String description;
+    private BasicTask locatedTask;
 
     public BeatNPCCondition() {
         this.uuid = null;
@@ -41,20 +43,14 @@ public class BeatNPCCondition implements ICondition<BeatNPCCondition> {
     @SneakyThrows
     @Override
     public boolean meet(OfflinePlayer player) {
-        for (UUID uuid : FITaskApi.playerData.getAllAcceptedTasks(player.getName()).keySet()) {
-            for (ICondition<?> condition : FITaskApi.getTask(uuid).getConditions()) {
-                if (condition == this) {
-                    String data = Main.playerData.getPlayerTaskCondition(player.getName(), uuid, BeatNPCCondition.class);
-                    if (data == null) {
-                        return false;
-                    }
-                    YamlConfiguration yaml = new YamlConfiguration();
-                    yaml.loadFromString(data);
-                    return yaml.getInt(this.uuid.toString()) >= this.amount;
-                }
-            }
+        String data = Main.playerData.getPlayerTaskCondition(player.getName(), this.locatedTask.getUuid(),
+                BeatNPCCondition.class);
+        if (data == null) {
+            return false;
         }
-        return false;
+        YamlConfiguration yaml = new YamlConfiguration();
+        yaml.loadFromString(data);
+        return yaml.getInt(this.uuid.toString()) >= this.amount;
     }
 
     @Override

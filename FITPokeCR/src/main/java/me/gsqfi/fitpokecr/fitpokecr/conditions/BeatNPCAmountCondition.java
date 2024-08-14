@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import me.gsqfi.fitask.fitask.api.FITaskApi;
+import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
 import me.gsqfi.fitask.fitask.api.taskcomponent.conditions.ICondition;
 import me.gsqfi.fitpokecr.fitpokecr.Main;
 import org.bukkit.OfflinePlayer;
@@ -22,6 +23,7 @@ import java.util.UUID;
 public class BeatNPCAmountCondition implements ICondition<BeatNPCAmountCondition> {
     private int amount;
     private String description;
+    private BasicTask locatedTask;
 
     public BeatNPCAmountCondition() {
         this.amount = 1;
@@ -39,18 +41,12 @@ public class BeatNPCAmountCondition implements ICondition<BeatNPCAmountCondition
     @SneakyThrows
     @Override
     public boolean meet(OfflinePlayer player) {
-        for (UUID uuid : FITaskApi.playerData.getAllAcceptedTasks(player.getName()).keySet()) {
-            for (ICondition<?> condition : FITaskApi.getTask(uuid).getConditions()) {
-                if (condition == this) {
-                    String data = Main.playerData.getPlayerTaskCondition(player.getName(), uuid, BeatNPCAmountCondition.class);
-                    if (data == null) {
-                        return false;
-                    }
-                    return Integer.parseInt(data) >= this.amount;
-                }
-            }
+        String data = Main.playerData.getPlayerTaskCondition(player.getName(), this.locatedTask.getUuid(),
+                BeatNPCAmountCondition.class);
+        if (data == null) {
+            return false;
         }
-        return false;
+        return Integer.parseInt(data) >= this.amount;
     }
 
     @Override

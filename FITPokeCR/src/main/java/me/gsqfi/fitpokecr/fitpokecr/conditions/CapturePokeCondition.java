@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import me.gsqfi.fitask.fitask.api.FITaskApi;
+import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
 import me.gsqfi.fitask.fitask.api.taskcomponent.conditions.ICondition;
 import me.gsqfi.fitpokecr.fitpokecr.Main;
 import org.bukkit.OfflinePlayer;
@@ -23,6 +24,7 @@ public class CapturePokeCondition implements ICondition<CapturePokeCondition> {
     private EnumSpecies species;
     private int amount;
     private String description;
+    private BasicTask locatedTask;
 
     public CapturePokeCondition(){
         this.species = EnumSpecies.Abomasnow;
@@ -41,20 +43,14 @@ public class CapturePokeCondition implements ICondition<CapturePokeCondition> {
     @SneakyThrows
     @Override
     public boolean meet(OfflinePlayer player) {
-        for (UUID uuid : FITaskApi.playerData.getAllAcceptedTasks(player.getName()).keySet()) {
-            for (ICondition<?> condition : FITaskApi.getTask(uuid).getConditions()) {
-                if (condition == this) {
-                    String data = Main.playerData.getPlayerTaskCondition(player.getName(), uuid, CapturePokeCondition.class);
-                    if (data == null) {
-                        return false;
-                    }
-                    YamlConfiguration yaml = new YamlConfiguration();
-                    yaml.loadFromString(data);
-                    return yaml.getInt(this.species.name()) >= this.amount;
-                }
-            }
+        String data = Main.playerData.getPlayerTaskCondition(player.getName(), this.locatedTask.getUuid(),
+                CapturePokeCondition.class);
+        if (data == null) {
+            return false;
         }
-        return false;
+        YamlConfiguration yaml = new YamlConfiguration();
+        yaml.loadFromString(data);
+        return yaml.getInt(this.species.name()) >= this.amount;
     }
 
     @Override

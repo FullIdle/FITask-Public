@@ -4,13 +4,12 @@ import com.google.gson.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import me.gsqfi.fitask.fitask.api.FITaskApi;
+import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
 import me.gsqfi.fitask.fitask.api.taskcomponent.conditions.ICondition;
 import me.gsqfi.fitpokecr.fitpokecr.Main;
 import org.bukkit.OfflinePlayer;
 
 import java.lang.reflect.Type;
-import java.util.UUID;
 
 /**
  * 采摘球果 不需要指定球果类型
@@ -20,6 +19,7 @@ import java.util.UUID;
 public class PickApricornAmountCondition implements ICondition<PickApricornAmountCondition> {
     private int amount;
     private String description;
+    private BasicTask locatedTask;
 
     public PickApricornAmountCondition() {
         this.amount = 1;
@@ -37,18 +37,12 @@ public class PickApricornAmountCondition implements ICondition<PickApricornAmoun
     @SneakyThrows
     @Override
     public boolean meet(OfflinePlayer player) {
-        for (UUID uuid : FITaskApi.playerData.getAllAcceptedTasks(player.getName()).keySet()) {
-            for (ICondition<?> condition : FITaskApi.getTask(uuid).getConditions()) {
-                if (condition == this) {
-                    String data = Main.playerData.getPlayerTaskCondition(player.getName(), uuid, PickApricornAmountCondition.class);
-                    if (data == null) {
-                        return false;
-                    }
-                    return Integer.parseInt(data) >= this.amount;
-                }
-            }
+        String data = Main.playerData.getPlayerTaskCondition(player.getName(), this.locatedTask.getUuid(),
+                PickApricornAmountCondition.class);
+        if (data == null) {
+            return false;
         }
-        return false;
+        return Integer.parseInt(data) >= this.amount;
     }
 
     @Override

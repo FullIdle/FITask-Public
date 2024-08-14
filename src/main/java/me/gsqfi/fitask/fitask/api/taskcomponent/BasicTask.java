@@ -45,16 +45,20 @@ public class BasicTask implements IAdapter<BasicTask>,IDescription{
         JsonArray conditionArray = object.get("conditions").getAsJsonArray();
         this.conditions = new ICondition<?>[conditionArray.size()];
         for (int i = 0; i < conditionArray.size(); i++) {
-            JsonObject con = (JsonObject) conditionArray.get(i);
-            this.conditions[i] = DataPersistenceHelper.gson.fromJson(con.get("data"),
-                    ((Class<? extends ICondition>) Class.forName(con.get("type").getAsString())));
+            JsonObject jsonObject = (JsonObject) conditionArray.get(i);
+            ICondition<?> con = DataPersistenceHelper.gson.fromJson(jsonObject.get("data"),
+                    ((Class<? extends ICondition>) Class.forName(jsonObject.get("type").getAsString())));
+            con.setLocatedTask(this);
+            this.conditions[i] = con;
         }
         JsonArray rewardArray = object.get("rewards").getAsJsonArray();
         this.rewards = new IReward[rewardArray.size()];
         for (int i = 0; i < rewardArray.size(); i++) {
-            JsonObject con = (JsonObject) rewardArray.get(i);
-            this.rewards[i] = DataPersistenceHelper.gson.fromJson(con.get("data"),
-                    ((Class<? extends IReward>) Class.forName(con.get("type").getAsString())));
+            JsonObject jsonObject = (JsonObject) rewardArray.get(i);
+            IReward rew = DataPersistenceHelper.gson.fromJson(jsonObject.get("data"),
+                    ((Class<? extends IReward>) Class.forName(jsonObject.get("type").getAsString())));
+            rew.setLocatedTask(this);
+            this.rewards[i] = rew;
         }
 
         this.taskName = object.get("taskName").getAsString();
@@ -107,10 +111,10 @@ public class BasicTask implements IAdapter<BasicTask>,IDescription{
         object.add("conditions", conditionArray);
         JsonArray rewardArray = new JsonArray();
         for (IReward<?> reward : basicTask.rewards) {
-            JsonObject con = new JsonObject();
-            con.addProperty("type", reward.getClass().getName());
-            con.add("data", DataPersistenceHelper.gson.toJsonTree(reward));
-            rewardArray.add(con);
+            JsonObject rew = new JsonObject();
+            rew.addProperty("type", reward.getClass().getName());
+            rew.add("data", DataPersistenceHelper.gson.toJsonTree(reward));
+            rewardArray.add(rew);
         }
         object.add("rewards",rewardArray);
         object.addProperty("taskName",basicTask.taskName);

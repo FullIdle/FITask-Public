@@ -3,6 +3,7 @@ package me.gsqfi.fitask.fitask.api.taskcomponent.conditions;
 import com.google.gson.*;
 import lombok.Getter;
 import lombok.Setter;
+import me.gsqfi.fitask.fitask.api.taskcomponent.BasicTask;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -16,6 +17,7 @@ public class ItemStackCondition implements ICondition<ItemStackCondition>{
     private Material material;
     private int amount;
     private String description;
+    private BasicTask locatedTask;
 
     public ItemStackCondition(){
         this.material = Material.STONE;
