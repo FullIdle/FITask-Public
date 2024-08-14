@@ -45,7 +45,6 @@ public class CommandReward implements IReward<CommandReward>{
         }
         if (command.startsWith("console: ")){
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(),papi.substring(9));
-            return;
         }
     }
 

@@ -1,6 +1,5 @@
 package me.gsqfi.fitaskgui.fitaskgui;
 
-import me.gsqfi.fitask.fitask.api.events.player.TaskDataInitEvent;
 import me.gsqfi.fitaskgui.fitaskgui.api.FITaskGuiApi;
 import me.gsqfi.fitaskgui.fitaskgui.api.playerdata.MySQLPlayerLastCompleteData;
 import me.gsqfi.fitaskgui.fitaskgui.api.playerdata.YamlPlayerLastCompleteData;
@@ -52,15 +51,14 @@ public class Main extends JavaPlugin implements TabExecutor, Listener {
             FITaskGuiApi.playerData.load(player.getName());
         }
 
-        Bukkit.getScheduler().runTask(this,()->{
-            GuiTypeBasic.init(this);
-        });
+        Bukkit.getScheduler().runTask(this,()-> GuiTypeBasic.init(this));
     }
 
     @Override
     public void onEnable() {
         plugin = this;
         this.reloadConfig();
+        new Papi().register();
         PluginCommand command = getCommand("fitaskgui");
         MainCmd mainCmd = new MainCmd();
         command.setExecutor(mainCmd);
