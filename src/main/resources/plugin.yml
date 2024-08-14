@@ -25,3 +25,5 @@ permissions:
     default: op
   fitask.cmd.show:
     default: op
+  fitask.cmd.submit:
+    default: true
